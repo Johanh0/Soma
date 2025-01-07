@@ -19,10 +19,16 @@ app.set("view engine", "hbs");
 
 // Path static client directory
 app.use(express.static(path.join(__dirname, "../client/public")));
+console.log(path.join(__dirname, "../client/public"));
 
 // Route's pages
-app.get("/", async (req, res) => {
-  res.render("home", { layout: "main", title: "MindWay" });
+app.get("/", (req, res) => {
+  res.render("home", {
+    layout: "main",
+    title: "MindWay",
+    style: "css/home.css",
+    script: "js/home.js",
+  });
 });
 
 app.get("/login", (req, res) => {
