@@ -1,0 +1,61 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 90px;
+  min-height: fit-content;
+}
+
+.hero__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  & h1 {
+    font-size: var(--fontSize-lg);
+  }
+
+  & p {
+    font-size: var(--fontSize-md);
+  }
+}
+
+.hero__grid {
+  display: grid;
+  align-content: end;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  gap: 15px;
+
+  & div {
+    display: flex;
+    align-items: end;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 210px;
+
+    & img {
+      width: 100%;
+    }
+  }
+}
+
+.green-bg {
+  background-color: var(--soft-primary-color);
+}
+
+.orange-bg {
+  background-color: var(--soft-secondary-color);
+}
+
+/* Responsive */
+
+@media (max-width: 779px) {
+  .hero {
+    flex-direction: column;
+  }
+}
