@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 export function navbarToggle() {
   // Get the menu icon
   const menuIcon = document.querySelector(".navbar--icon");
-=======
-export default function navbarToggle() {
-  // Get the menu icon
-  const menuIcon = document.querySelector(".navbar__menu");
->>>>>>> front-end
   const menu = document.querySelector(".menu");
 
   //   Add the event to toggle the menu
@@ -29,7 +23,6 @@ export default function navbarToggle() {
     }
   });
 }
-<<<<<<< HEAD
 
 export function themeToggle() {
   const themeIcon = document.querySelector(".theme--icon");
@@ -52,5 +45,3 @@ export function themeToggle() {
     }
   });
 }
-=======
->>>>>>> front-end

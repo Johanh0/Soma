@@ -1,16 +1,18 @@
 :root {
   /* Colors */
-  --primary-color: #ff6a13;
+  /* --primary-color: #ff6a13;
   --secondary-color: #ff6a13;
   --gray-color: #f5f3f3;
   --black-color: #333333;
-  --white-color: #ffffff;
-  --soft-primary-color-1: linear-gradient(90deg, #ff6a13, #ffffff);
-  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff6a13);
+  --white-color: #ffffff; */
+  /* --soft-primary-color-1: linear-gradient(90deg, #ff6a13, #ffffff);
+  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff6a13); */
   --soft-secondary-color: white;
   --soft-black-color: #4f4f4f;
   --primary-btn-color: #ff6a13;
-  --footer-color: linear-gradient(#ffffff, #ff6a13);
+  --transparent: transparent;
+
+  /* --footer-color: linear-gradient(#ffffff, #ff6a13); */
 
   /* Font Size */
   --fontSize-xl: 68px;
@@ -24,11 +26,14 @@ body {
   --primary-color: #ff6d00;
   --secondary-color: #ff6d00;
   --gray-color: #f5f3f3;
-  --black-color: #333333;
+  --black-color: black;
   --white-color: #ffffff;
   --soft-black-color: #4f4f4f;
   --bg-color: white;
   --font-color: #333333;
+  --footer-color: linear-gradient(#ffffff, #ff6a13);
+  --card-color-1: linear-gradient(90deg, #ff6a13, #ffffff);
+  --card-color-2: linear-gradient(90deg, #ffffff, #ff6a13);
 }
 
 body.dark--theme {
@@ -36,13 +41,12 @@ body.dark--theme {
   --primary-color: #ff6d00;
   --secondary-color: #ff6d00;
   --gray-color: #f5f3f3;
-  --black-color: #333333;
+  --black-color: black;
   --white-color: #ffffff;
   --soft-black-color: #4f4f4f;
   --bg-color: black;
   --font-color: white;
-
-  & footer {
-    background-color: var(--bg-color);
-  }
+  --footer-color: black;
+  --card-color-1: linear-gradient(90deg, #ff6a13, #ffffff00);
+  --card-color-2: linear-gradient(90deg, #ffffff00, #ff6a13);
 }
