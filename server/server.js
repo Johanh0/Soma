@@ -34,16 +34,21 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/exercise", (req, res) => {
+  res.render("exercise", {
+    layout: "main",
+    title: "Motion Exercise",
+    style: "css/exercise.css",
+    script: "js/exercise.js",
+  });
+});
+
 app.get("/login", (req, res) => {
   res.render("login", { layout: "main", title: "MindWay login" });
 });
 
 app.get("/form", (req, res) => {
   res.render("form", { layout: "main", title: "MindWay from" });
-});
-
-app.get("/resources", (req, res) => {
-  res.render("resources", { layout: "main", title: "MindWay resources" });
 });
 
 app.get("/chatai", (req, res) => {
@@ -58,9 +63,12 @@ app.use(`${API_VERSION}/exercise`, apiExercise);
 app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Handle 404 - Not Found
-app.use((req, res) => {
-  res.status(404).send({
-    msg: "404 - Page not found",
+app.get("/*", (req, res) => {
+  res.status(404).render("404", {
+    layout: "main",
+    title: "Page Not Found",
+    style: "css/404.css",
+    script: "js/404.js",
   });
 });
 
