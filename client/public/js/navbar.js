@@ -1,6 +1,6 @@
-export default function navbarToggle() {
+export function navbarToggle() {
   // Get the menu icon
-  const menuIcon = document.querySelector(".navbar__menu");
+  const menuIcon = document.querySelector(".navbar--icon");
   const menu = document.querySelector(".menu");
 
   //   Add the event to toggle the menu
@@ -19,6 +19,28 @@ export default function navbarToggle() {
       case false:
         menuIcon.src = `${srcPath}/menu.svg`;
         menu.style.display = "none";
+        break;
+    }
+  });
+}
+
+export function themeToggle() {
+  const themeIcon = document.querySelector(".theme--icon");
+  const bodyElement = document.querySelector("body");
+
+  themeIcon.addEventListener("click", () => {
+    // Add the toggle method
+    bodyElement.classList.toggle("dark--theme");
+    // Check if the menu is open
+    const isDarkTheme = bodyElement.classList.contains("dark--theme");
+    const srcPath = "/assets/svg/";
+    // Switch the icon and open or close the menu depending on the condition
+    switch (isDarkTheme) {
+      case true:
+        themeIcon.src = `${srcPath}/sun.svg`;
+        break;
+      case false:
+        themeIcon.src = `${srcPath}/moon.svg`;
         break;
     }
   });

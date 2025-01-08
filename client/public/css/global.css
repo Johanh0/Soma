@@ -9,8 +9,6 @@
 
 html {
   font-family: "Lato", serif;
-  color: var(--font-color);
-  background-color: var(--bg-color);
 }
 
 body {
@@ -19,6 +17,9 @@ body {
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
   font-size: var(--text-md);
+  color: var(--font-color);
+
+  background-color: var(--bg-color);
 }
 
 body :where(header, main, .footer) {
@@ -37,10 +38,12 @@ a {
 .primary-btn {
   display: block;
   max-width: 200px;
+  min-width: 200px;
   height: fit-content;
-  padding: 15px 0;
+  padding: 10px 0;
   text-align: center;
   font-size: var(--fontSize-sm);
+  font-weight: bold;
   color: var(--white-color);
   background-color: var(--primary-color);
   border-radius: 8px;

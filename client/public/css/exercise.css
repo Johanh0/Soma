@@ -1,0 +1,25 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: var(--fontSize-md);
+
+  & h1 {
+    text-align: center;
+    max-width: 600px;
+  }
+}
+
+.search {
+  display: flex;
+  max-width: 700px;
+  min-width: 700px;
+  background-color: red;
+}

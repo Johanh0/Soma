@@ -45,11 +45,11 @@
 }
 
 .green-bg {
-  background-color: var(--soft-primary-color);
+  background-color: var(--primary-color);
 }
 
 .orange-bg {
-  background-color: var(--soft-secondary-color);
+  background-color: var(--gray-color);
 }
 
 /* Responsive */
