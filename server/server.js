@@ -6,6 +6,9 @@ const { create } = require("express-handlebars");
 // PORT
 const PORT = process.env.PORT || 3003;
 
+// API Version
+const API_VERSION = "/api/v1";
+
 // Set handlebars
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"),
@@ -46,6 +49,13 @@ app.get("/resources", (req, res) => {
 app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "MindWay chatAI" });
 });
+
+// Routers
+const apiExercise = require("./routes/api/exercise.js");
+const apiRecipe = require("./routes/api/recipe.js");
+
+app.use(`${API_VERSION}/exercise`, apiExercise);
+app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Handle 404 - Not Found
 app.use((req, res) => {

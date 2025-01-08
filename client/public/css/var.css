@@ -1,13 +1,15 @@
 :root {
   /* Colors */
-  --primary-color: #629d8c;
-  --secondary-color: #ffbf99;
+  --primary-color: #ff6d00;
+  --secondary-color: #ff6d00;
   --gray-color: #f5f3f3;
   --black-color: #333333;
   --white-color: #ffffff;
-  --soft-primary-color: #a4c6bc;
-  --soft-secondary-color: #ffcaaa;
+  --soft-primary-color: #ff6d00;
+  --soft-secondary-color: #f2f2f2;
   --soft-black-color: #4f4f4f;
+  --bg-color: white;
+  --font-color: black;
 
   /* Font Size */
   --fontSize-xl: 68px;
