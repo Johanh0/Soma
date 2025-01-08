@@ -47,10 +47,6 @@ app.get("/login", (req, res) => {
   res.render("login", { layout: "main", title: "MindWay login" });
 });
 
-app.get("/form", (req, res) => {
-  res.render("form", { layout: "main", title: "MindWay from" });
-});
-
 app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "MindWay chatAI" });
 });
