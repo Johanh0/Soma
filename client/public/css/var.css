@@ -8,6 +8,19 @@
 
   /* --footer-color: linear-gradient(#ffffff, #ff6a13); */
 
+  /* Colors */
+  /* --primary-color: #ff4d00;
+  --secondary-color: #ff6a13;
+  --gray-color: hsl(0, 9%, 96%);
+  --black-color: #333333;
+  --white-color: #ffffff;
+  --soft-primary-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
+  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
+  --soft-secondary-color: white;
+  --soft-black-color: #4f4f4f;
+  --primary-btn-color: #333333; */
+  /* --footer-color: linear-gradient(#ffffff, #ff4d0059); */
+  --hover-color: #333333ce;
   /* Font Size */
   --fontSize-xl: 68px;
   --fontSize-lg: 64px;
@@ -18,11 +31,11 @@
 body {
   /* Light theme colors */
   /* Primary colors */
-  --primary-color: #495057;
-  --secondary-color: #495057;
+  --primary-color: #ff4d00;
+  --secondary-color: #ff6a13;
 
   /* Basic colors */
-  --gray-color: #f5f3f3;
+  --gray-color: hsl(0, 9%, 96%);
   /* --soft-black-color: #4f4f4f; */
 
   /* Button colors */
@@ -36,11 +49,11 @@ body {
   --font-color: #333333;
 
   /* Card color */
-  --card-color-1: linear-gradient(90deg, #495057, #ffffff);
-  --card-color-2: linear-gradient(90deg, #ffffff, #495057);
+  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
+  --card-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
 
   /* Footer color */
-  --footer-color: linear-gradient(#ffffff, #495057);
+  --footer-color: linear-gradient(#ffffff, #ff4d0059);
 
   /* Inverse color */
   --inverse-color: #333333;
@@ -50,11 +63,11 @@ body.dark--theme {
   /* Dark theme colors
 
   /* Primary colors */
-  --primary-color: #495057;
-  --secondary-color: #495057;
+  --primary-color: #ff4d00;
+  --secondary-color: #ff6a13;
 
   /* Basic colors */
-  --gray-color: #f5f3f3;
+  --gray-color: hsl(0, 9%, 96%);
   /* --soft-black-color: #4f4f4f; */
 
   /* Button colors */
@@ -68,8 +81,8 @@ body.dark--theme {
   --font-color: #fff;
 
   /* Card color */
-  --card-color-1: linear-gradient(90deg, #495057, #171718);
-  --card-color-2: linear-gradient(90deg, #171718, #495057);
+  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
+  --card-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
   --card-color-3: red;
 
   /* Footer color */

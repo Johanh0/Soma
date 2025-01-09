@@ -6,6 +6,7 @@
 
   & .navbar__logo p {
     font-weight: bold;
+    color: var(--primary-color);
   }
 
   & .navbar__links ul {
@@ -54,6 +55,23 @@
       gap: 2px;
     }
   }
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between the logo and "SOMA" */
+}
+
+.navbar__logo img {
+  width: 50px; /* Keep the size manageable */
+  height: 50px;
+  object-fit: contain; /* Ensures the image scales correctly */
+}
+
+.navbar__logo p {
+  font-size: var(--fontSize-md); /* Adjust text size as needed */
+  margin: 0; /* Remove default margins to align it better */
 }
 
 @media (max-width: 779px) {
