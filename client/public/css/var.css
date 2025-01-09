@@ -47,6 +47,7 @@ body {
 
   /* Font color */
   --font-color: #333333;
+  --inverse-font-color: white;
 
   /* Card color */
   --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
@@ -79,6 +80,7 @@ body.dark--theme {
 
   /* Font color */
   --font-color: #fff;
+  --inverse-font-color: 333333;
 
   /* Card color */
   --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
