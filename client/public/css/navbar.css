@@ -20,13 +20,17 @@
     align-items: center;
     gap: 10px;
 
+    & .theme--icon {
+      cursor: pointer;
+    }
+
     & a:nth-child(1) {
       & img {
         width: 25px;
       }
     }
 
-    & .navbar__menu {
+    & .navbar--icon {
       display: none;
     }
   }
@@ -77,7 +81,7 @@
     }
 
     & .navbar__login {
-      & .navbar__menu {
+      & .navbar--icon {
         display: block;
         width: 30px;
         cursor: pointer;
