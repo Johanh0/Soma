@@ -1,4 +1,4 @@
-import { navbarToggle, themeToggle } from "/js/navbar.js";
+import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
 const searchForm = document.querySelector(".search");
@@ -146,7 +146,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   handleModal();
-
+  storageTheme();
   themeToggle();
   navbarToggle();
   footerYear();

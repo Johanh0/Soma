@@ -43,9 +43,10 @@
     position: absolute;
     display: none;
     right: 0;
-    padding: 10px 15px;
+    padding: 15px 20px;
+    margin-top: 5px;
     text-align: end;
-    background-color: var(--gray-color);
+    background-color: var(--bg-secondary-color);
     border-radius: 8px;
 
     & ul {

@@ -33,6 +33,8 @@ export function themeToggle() {
     bodyElement.classList.toggle("dark--theme");
     // Check if the menu is open
     const isDarkTheme = bodyElement.classList.contains("dark--theme");
+    // Save in localStorage the state of the theme color
+    localStorage.setItem("color-theme", `${isDarkTheme}`);
     const srcPath = "/assets/svg/";
     // Switch the icon and open or close the menu depending on the condition
     switch (isDarkTheme) {
@@ -44,4 +46,22 @@ export function themeToggle() {
         break;
     }
   });
+}
+
+export function storageTheme() {
+  const themeIcon = document.querySelector(".theme--icon");
+  const bodyElement = document.querySelector("body");
+  const isDarkTheme = localStorage.getItem("color-theme");
+  const srcPath = "/assets/svg/";
+  // Switch the icon and open or close the menu depending on the condition
+  switch (isDarkTheme) {
+    case "true":
+      themeIcon.src = `${srcPath}/sun.svg`;
+      bodyElement.classList.add("dark--theme");
+      break;
+    case "false":
+      themeIcon.src = `${srcPath}/moon.svg`;
+      bodyElement.classList.remove("dark--theme");
+      break;
+  }
 }

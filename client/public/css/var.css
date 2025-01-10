@@ -9,17 +9,6 @@
   /* --footer-color: linear-gradient(#ffffff, #ff6a13); */
 
   /* Colors */
-  /* --primary-color: #ff4d00;
-  --secondary-color: #ff6a13;
-  --gray-color: hsl(0, 9%, 96%);
-  --black-color: #333333;
-  --white-color: #ffffff;
-  --soft-primary-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
-  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
-  --soft-secondary-color: white;
-  --soft-black-color: #4f4f4f;
-  --primary-btn-color: #333333; */
-  /* --footer-color: linear-gradient(#ffffff, #ff4d0059); */
   --hover-color: #333333ce;
   /* Font Size */
   --fontSize-xl: 68px;
@@ -83,8 +72,8 @@ body.dark--theme {
   --inverse-font-color: 333333;
 
   /* Card color */
-  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
-  --card-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
+  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ff4d0000);
+  --card-color-2: linear-gradient(90deg, #ff4d0000, #ff4d00c7);
   --card-color-3: red;
 
   /* Footer color */
