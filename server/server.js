@@ -34,7 +34,6 @@ app.get("/", (req, res) => {
   });
 });
 
-
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
@@ -43,7 +42,6 @@ app.get("/signup", (req, res) => {
     script: "js/signup.js",
   });
 });
-
 
 app.get("/login", (req, res) => {
   res.render("login", {
@@ -60,7 +58,6 @@ app.get("/exercise", (req, res) => {
     title: "Soma Exercise",
     style: "css/exercise.css",
     script: "js/exercise.js",
-
   });
 });
 
