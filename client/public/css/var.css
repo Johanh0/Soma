@@ -74,6 +74,7 @@ body.dark--theme {
   /* Card color */
   --card-color-1: linear-gradient(90deg, #ff4d00c7, #ff4d0000);
   --card-color-2: linear-gradient(90deg, #ff4d0000, #ff4d00c7);
+
   --card-color-3: red;
 
   /* Footer color */

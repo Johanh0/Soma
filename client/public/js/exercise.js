@@ -45,7 +45,6 @@ function handleModal() {
 }
 
 function openModal(data) {
-  console.log(data);
   modalView.style.display = "flex";
 
   modalView.innerHTML = `

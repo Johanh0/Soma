@@ -71,6 +71,13 @@ const { title } = require("process");
 app.use(`${API_VERSION}/exercise`, apiExercise);
 app.use(`${API_VERSION}/recipe`, apiRecipe);
 
+// Routers
+const apiExercise = require("./routes/api/exercise.js");
+const apiRecipe = require("./routes/api/recipe.js");
+
+app.use(`${API_VERSION}/exercise`, apiExercise);
+app.use(`${API_VERSION}/recipe`, apiRecipe);
+
 // Handle 404 - Not Found
 app.get("/*", (req, res) => {
   res.status(404).render("404", {
