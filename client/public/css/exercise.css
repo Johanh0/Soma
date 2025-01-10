@@ -40,6 +40,7 @@
     min-height: 30px;
     min-width: 70px;
     border-radius: 5px;
+    padding: 0 5px;
   }
 
   & div select {
@@ -49,7 +50,7 @@
   }
 
   & div .submit {
-    background-color: black;
+    background-color: var(--primary-color);
     color: var(--white-color);
     font-weight: bold;
     border: none;
@@ -100,10 +101,10 @@
       font-size: var(--fontSize-sm);
       text-transform: uppercase;
       font-weight: bold;
-      color: var(--font-color);
+      color: var(--primary-color);
     }
 
-    & h4 {
+    & h5 {
       font-size: var(--fontSize-sm);
     }
   }
@@ -152,18 +153,56 @@
     & .card--info {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 15px;
 
       & h3 {
         font-size: var(--fontSize-sm);
         text-transform: uppercase;
         font-weight: bold;
-        color: var(--font-color);
+        color: var(--primary-color);
       }
 
-      & h4 {
-        font-size: var(--fontSize-sm);
+      & h4,
+      h5 {
+        font-size: 15px;
+        text-transform: uppercase;
       }
+    }
+  }
+}
+
+.card--info {
+  & .secondary--muscles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+
+    & p {
+      font-weight: bold;
+    }
+
+    & .muscle--tag {
+      background-color: var(--primary-color);
+      width: fit-content;
+      padding: 7px 10px;
+      border-radius: 4px;
+    }
+  }
+  & .instructions {
+    & p {
+      margin-bottom: 5px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    & ol {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 20px;
     }
   }
 }
