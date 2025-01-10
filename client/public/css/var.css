@@ -84,3 +84,72 @@ body.dark--theme {
 }
 
 /* 171718 */
+
+body {
+  /* Light theme colors */
+  /* Primary colors */
+  --primary-color: #ff4d00;
+  --secondary-color: #ff6a13;
+
+  /* Basic colors */
+  --gray-color: hsl(0, 9%, 96%);
+  /* --soft-black-color: #4f4f4f; */
+
+  /* Button colors */
+  --primary-btn-color: #495057;
+
+  /* Background color */
+  --bg-color: white;
+  --bg-secondary-color: #f5f3f3;
+
+  /* Font color */
+  --font-color: #333333;
+  --inverse-font-color: white;
+
+  /* Card color */
+  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ffffff);
+  --card-color-2: linear-gradient(90deg, #ffffff, #ff4d00c7);
+
+  /* Footer color */
+  --footer-color: linear-gradient(#ffffff, #ff4d0059);
+
+  /* Inverse color */
+  --inverse-color: #333333;
+}
+
+body.dark--theme {
+  /* Dark theme colors
+
+  /* Primary colors */
+  --primary-color: #ff4d00;
+  --secondary-color: #ff6a13;
+
+  /* Basic colors */
+  --gray-color: hsl(0, 9%, 96%);
+  /* --soft-black-color: #4f4f4f; */
+
+  /* Button colors */
+  --primary-btn-color: #495057;
+
+  /* Background color */
+  --bg-color: #171718;
+  --bg-secondary-color: #3b3b3e;
+
+  /* Font color */
+  --font-color: #fff;
+  --inverse-font-color: 333333;
+
+  /* Card color */
+  --card-color-1: linear-gradient(90deg, #ff4d00c7, #ff4d0000);
+  --card-color-2: linear-gradient(90deg, #ff4d0000, #ff4d00c7);
+
+  --card-color-3: red;
+
+  /* Footer color */
+  --footer-color: linear-gradient(#171718, #000);
+
+  /* Inverse color */
+  --inverse-color: #fff;
+}
+
+/* 171718 */
