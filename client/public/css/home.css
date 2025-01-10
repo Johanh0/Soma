@@ -42,13 +42,21 @@
       width: 100%;
     }
   }
+
+  & div:nth-child(2),
+  div:nth-child(3) {
+    width: 1200px;
+  }
 }
 
-.green-bg {
-  background-color: var(--soft-primary-color);
+.orange-1-bg {
+  background: var(--soft-primary-color-1);
+}
+.orange-2-bg {
+  background: var(--soft-primary-color-2);
 }
 
-.orange-bg {
+.white-bg {
   background-color: var(--soft-secondary-color);
 }
 

@@ -4,7 +4,7 @@ const app = express();
 const { create } = require("express-handlebars");
 
 // PORT
-const PORT = process.env.PORT || 3004;
+const PORT = process.env.PORT || 3009;
 
 // Set handlebars
 const hbs = create({
@@ -31,8 +31,23 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/signup", (req, res) => {
+  res.render("signup", {
+    layout: "main",
+    title: "MindWay",
+    style: "css/signup.css",
+    script: "js/signup.js",
+  });
+});
+
+
 app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "MindWay login", style: "css/login.css", script: "js/login.js", });
+  res.render("login", {
+    layout: "loginLayout",
+    title: "MindWay login",
+    style: "css/login.css",
+    script: "js/login.js",
+  });
 });
 
 app.get("/form", (req, res) => {

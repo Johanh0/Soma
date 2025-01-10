@@ -1,12 +1,13 @@
 :root {
   /* Colors */
-  --primary-color: #629d8c;
-  --secondary-color: #ffbf99;
+  --primary-color: #ff6a13;
+  --secondary-color: #ff6a13;
   --gray-color: #f5f3f3;
   --black-color: #333333;
   --white-color: #ffffff;
-  --soft-primary-color: #a4c6bc;
-  --soft-secondary-color: #ffcaaa;
+  --soft-primary-color-1: linear-gradient(90deg, #ff6a13, #ffffff);
+  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff6a13);
+  --soft-secondary-color: white;
   --soft-black-color: #4f4f4f;
  
 
