@@ -1,10 +1,9 @@
-import { navbarToggle, themeToggle } from "/js/navbar.js";
+import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
-const searchSubmit = document.querySelector(".submit");
 
 const resultContainer = document.querySelector(".result");
 
@@ -39,7 +38,6 @@ function handleModal() {
   allCards.forEach((card) => {
     card.addEventListener("click", () => {
       const cardID = card.dataset.id;
-      console.log(cardID);
       const exercise = allExercises.data.find((data) => data.id === cardID);
       openModal(exercise);
     });
@@ -57,9 +55,36 @@ function openModal(data) {
     <div class="card--info">
       <h3>${data.name}</h3>
       <h5>${data.target}</h5>
+      <div class="secondary--muscles">
+      <p>Other muscles:</p>
+      </div>
+      <div class="instructions">
+      <p>Instructions</p>
+        <ol>
+  
+        </ol>
+      </div>
     </div>
   </div>
   `;
+
+  // <div class="muscle--tag">Muscle</div>
+  // <div class="muscle--tag">Muscle</div>
+
+  const secondaryMusclesElement = document.querySelector(".secondary--muscles");
+  const instructionsElement = document.querySelector(".instructions ol");
+
+  data.secondaryMuscles.forEach((muscle) => {
+    secondaryMusclesElement.innerHTML += `
+      <div class="muscle--tag">${muscle}</div>
+    `;
+  });
+
+  data.instructions.forEach((instruction) => {
+    instructionsElement.innerHTML += `
+    <li>${instruction}</li>
+    `;
+  });
 }
 
 function closeModal() {
@@ -77,9 +102,13 @@ searchForm.addEventListener("submit", async (event) => {
     .filter((data) => data.bodyPart === exercise && data.target === target)
     .slice(0, 20);
 
-  console.log(filterExercise);
-
   resultContainer.innerHTML = "";
+
+  if (filterExercise.length === 0) {
+    resultContainer.innerHTML = `
+    <h4>We Couldn't Found Any Data With This Options.</h4>
+    `;
+  }
 
   filterExercise.forEach((data) => {
     resultContainer.innerHTML += `
@@ -101,8 +130,6 @@ searchForm.addEventListener("submit", async (event) => {
 
 // Trigger functions after the DOM is loaded
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log(allExercises);
-
   allExercises.data.slice(0, 20).forEach((data) => {
     resultContainer.innerHTML += `
         <article class="result--card" data-id="${data.id}">
@@ -118,7 +145,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   handleModal();
-
+  storageTheme();
   themeToggle();
   navbarToggle();
   footerYear();

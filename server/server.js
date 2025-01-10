@@ -28,7 +28,7 @@ console.log(path.join(__dirname, "../client/public"));
 app.get("/", (req, res) => {
   res.render("home", {
     layout: "main",
-    title: "MindWay",
+    title: "Soma",
     style: "css/home.css",
     script: "js/home.js",
   });
@@ -37,19 +37,39 @@ app.get("/", (req, res) => {
 app.get("/exercise", (req, res) => {
   res.render("exercise", {
     layout: "main",
-    title: "Motion Exercise",
+    title: "Soma Exercise",
     style: "css/exercise.css",
     script: "js/exercise.js",
   });
 });
 
-app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "MindWay login" });
+// app.get("/recipes", (req, res) => {
+//   //
+// });
+
+app.get("/bmi", (req, res) => {
+  res.render("bmi", {
+    layout: "main",
+    title: "Soma BMI",
+    style: "css/bmi.css",
+    script: "js/bmi.js",
+  });
 });
 
 app.get("/chatai", (req, res) => {
-  res.render("chatai", { layout: "main", title: "MindWay chatAI" });
+  res.render("chatai", { layout: "main", title: "Soma chatAI" });
 });
+
+app.get("/login", (req, res) => {
+  res.render("login", { layout: "main", title: "Soma login" });
+});
+// Routers
+const apiExercise = require("./routes/api/exercise.js");
+const apiRecipe = require("./routes/api/recipe.js");
+const { title } = require("process");
+
+app.use(`${API_VERSION}/exercise`, apiExercise);
+app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Routers
 const apiExercise = require("./routes/api/exercise.js");

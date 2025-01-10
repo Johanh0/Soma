@@ -1,0 +1,34 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+
+.bmi__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  & .bmi__calculator {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 700px;
+    height: fit-content;
+    background-color: var(--bg-secondary-color);
+    padding: 25px;
+    border: none;
+    border-radius: 10px;
+
+    & .bmi__calculator--title {
+      font-size: var(--fontSize-md);
+    }
+
+    & form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+  }
+}
