@@ -53,14 +53,14 @@
 }
 
 .orange-1-bg {
-  background: var(--soft-primary-color-1);
+  background: var(--card-color-1);
 }
 .orange-2-bg {
-  background: var(--soft-primary-color-2);
+  background: var(--card-color-2);
 }
 
 .white-bg {
-  background-color: var(--soft-secondary-color);
+  background-color: var(--transparent);
 }
 
 /* Fitness Section */
@@ -84,12 +84,12 @@
 
 .fitness-home h1 {
   font-size: var(--fontSize-lg);
-  color: var(--black-color);
+  /* color: var(--black-color); */
 }
 
 .fitness-home p {
   font-size: var(--fontSize-md);
-  color: var(--soft-black-color);
+  /* color: var(--soft-black-color); */
   max-width: 700px;
 }
 
@@ -154,7 +154,7 @@
 
 .recipe-home h1 {
   font-size: var(--fontSize-lg);
-  color: var(--black-color);
+  /* color: var(--black-color); */
 }
 
 .recipe-home p {
@@ -216,7 +216,7 @@
 
 .chatbot-home h1 {
   font-size: var(--fontSize-lg);
-  color: var(--black-color);
+  /* color: var(--black-color); */
   margin-bottom: 10px;
 }
 
@@ -257,7 +257,7 @@
 
 .chatbot-card p {
   font-size: var(--fontSize-sm);
-  color: var(--soft-black-color);
+  color: black;
   line-height: 1.6;
 }
 
@@ -279,10 +279,7 @@
 }
 
 /* Responsive Design */
-/* Responsive Design */
-
-/* General Adjustments for Small Screens */
-@media (max-width: 1200px) {
+@media (max-width: 779px) {
   .hero {
     flex-direction: column;
     align-items: center;
@@ -425,5 +422,11 @@
 
   .chatbot-card p {
     line-height: 1.4;
+  }
+
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
 }
