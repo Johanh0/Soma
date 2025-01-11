@@ -58,6 +58,7 @@ app.get("/exercise", (req, res) => {
     title: "Soma Exercise",
     style: "css/exercise.css",
     script: "js/exercise.js",
+
   });
 });
 
