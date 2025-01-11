@@ -35,6 +35,11 @@ a {
   text-decoration: none;
 }
 
+input,
+select {
+  outline-color: var(--primary-color);
+}
+
 /* Buttons Styles */
 .primary-btn {
   display: block;

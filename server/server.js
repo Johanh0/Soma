@@ -43,7 +43,6 @@ app.get("/signup", (req, res) => {
   });
 });
 
-
 app.get("/login", (req, res) => {
   res.render("login", {
     layout: "loginLayout",
@@ -59,7 +58,15 @@ app.get("/exercise", (req, res) => {
     title: "Soma Exercise",
     style: "css/exercise.css",
     script: "js/exercise.js",
+  });
+});
 
+app.get("/recipes", (req, res) => {
+  res.render("recipes", {
+    layout: "main",
+    title: "Soma Recipes",
+    style: "css/recipes.css",
+    script: "js/recipes.js",
   });
 });
 
