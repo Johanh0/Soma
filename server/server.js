@@ -61,9 +61,14 @@ app.get("/exercise", (req, res) => {
   });
 });
 
-// app.get("/recipes", (req, res) => {
-//   //
-// });
+app.get("/recipes", (req, res) => {
+  res.render("recipes", {
+    layout: "main",
+    title: "Soma Recipes",
+    style: "css/recipes.css",
+    script: "js/recipes.js",
+  });
+});
 
 app.get("/bmi", (req, res) => {
   res.render("bmi", {

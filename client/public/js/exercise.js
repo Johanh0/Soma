@@ -4,6 +4,7 @@ import footerYear from "/js/footer.js";
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
+const loader = document.querySelector(".loader");
 
 const resultContainer = document.querySelector(".result");
 
@@ -68,9 +69,6 @@ function openModal(data) {
   </div>
   `;
 
-  // <div class="muscle--tag">Muscle</div>
-  // <div class="muscle--tag">Muscle</div>
-
   const secondaryMusclesElement = document.querySelector(".secondary--muscles");
   const instructionsElement = document.querySelector(".instructions ol");
 
@@ -97,19 +95,21 @@ searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const exercise = exerciseOptions.value;
   const target = targetOptions.value;
+  resultContainer.innerHTML = "";
+  loader.style.display = "block";
 
   const filterExercise = allExercises.data
     .filter((data) => data.bodyPart === exercise && data.target === target)
     .slice(0, 20);
 
-  resultContainer.innerHTML = "";
-
   if (filterExercise.length === 0) {
+    loader.style.display = "none";
     resultContainer.innerHTML = `
     <h4>We Couldn't Found Any Data With This Options.</h4>
     `;
   }
 
+  loader.style.display = "none";
   filterExercise.forEach((data) => {
     resultContainer.innerHTML += `
         <article class="result--card" data-id="${data.id}">
@@ -119,7 +119,6 @@ searchForm.addEventListener("submit", async (event) => {
         <div class="card--info">
             <h3>${data.target} - ${data.name}</h3>
             <h4>${data.bodyPart}</h4>
-            <h5>instruc</h5>
         </div>
     </article>
     `;

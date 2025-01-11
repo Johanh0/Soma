@@ -26,6 +26,7 @@ export function navbarToggle() {
 
 export function themeToggle() {
   const themeIcon = document.querySelector(".theme--icon");
+  const userIcon = document.querySelector(".user--icon");
   const bodyElement = document.querySelector("body");
 
   themeIcon.addEventListener("click", () => {
@@ -40,9 +41,12 @@ export function themeToggle() {
     switch (isDarkTheme) {
       case true:
         themeIcon.src = `${srcPath}/sun.svg`;
+        userIcon.src = `${srcPath}/user-dark.svg`;
         break;
       case false:
         themeIcon.src = `${srcPath}/moon.svg`;
+        userIcon.src = `${srcPath}/user.svg`;
+
         break;
     }
   });
@@ -50,6 +54,7 @@ export function themeToggle() {
 
 export function storageTheme() {
   const themeIcon = document.querySelector(".theme--icon");
+  const userIcon = document.querySelector(".user--icon");
   const bodyElement = document.querySelector("body");
   const isDarkTheme = localStorage.getItem("color-theme");
   const srcPath = "/assets/svg/";
@@ -57,10 +62,13 @@ export function storageTheme() {
   switch (isDarkTheme) {
     case "true":
       themeIcon.src = `${srcPath}/sun.svg`;
+      userIcon.src = `${srcPath}/user-dark.svg`;
+
       bodyElement.classList.add("dark--theme");
       break;
     case "false":
       themeIcon.src = `${srcPath}/moon.svg`;
+      userIcon.src = `${srcPath}/user.svg`;
       bodyElement.classList.remove("dark--theme");
       break;
   }
