@@ -78,9 +78,6 @@ app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "Soma chatAI" });
 });
 
-app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "Soma login" });
-});
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
 const apiRecipe = require("./routes/api/recipe.js");
