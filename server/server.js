@@ -63,13 +63,6 @@ app.get("/chatai", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login", { layout: "main", title: "Soma login" });
 });
-// Routers
-const apiExercise = require("./routes/api/exercise.js");
-const apiRecipe = require("./routes/api/recipe.js");
-const { title } = require("process");
-
-app.use(`${API_VERSION}/exercise`, apiExercise);
-app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
