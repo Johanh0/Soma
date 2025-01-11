@@ -34,7 +34,6 @@ app.get("/", (req, res) => {
   });
 });
 
-
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
@@ -64,10 +63,6 @@ app.get("/exercise", (req, res) => {
   });
 });
 
-// app.get("/recipes", (req, res) => {
-//   //
-// });
-
 app.get("/bmi", (req, res) => {
   res.render("bmi", {
     layout: "main",
@@ -81,9 +76,6 @@ app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "Soma chatAI" });
 });
 
-app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "Soma login" });
-});
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
 const apiRecipe = require("./routes/api/recipe.js");
