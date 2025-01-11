@@ -1,47 +1,60 @@
-<section class="bmi__container">
-  <div class="bmi__calculator">
-    <div class="bmi__calculator--title">
-      <p>Enter your details below</p>
+<div class="bmi__container">
+  <form id="bmiForm">
+    <div class="bmi__calculator--options">
+      <div>
+        <input type="radio" name="gender" id="male" />
+        <label for="male">Male</label>
+      </div>
+      <div>
+        <input type="radio" name="gender" id="female" />
+        <label for="female">Female</label>
+      </div>
     </div>
-    <form action="">
-      <div>
-        <div>
-          <input type="radio" name="" id="" />
-          <label for=""></label>
-        </div>
-        <div>
-          <input type="radio" name="" id="" />
-          <label for=""></label>
-        </div>
-      </div>
 
-      <div>
-        <div>
-          <label for=""></label>
-          <div>
-            <input type="text" />
-            <span>cm</span>
-          </div>
+    <div class="bmi__calculator--inputs">
+      <div class="bmi__input--group">
+        <label for="height">Height</label>
+        <div class="bmi__input--field">
+          <input
+            type="text"
+            id="height"
+            name="height"
+            placeholder="Enter height"
+          />
+          <span id="heightUnit">cm</span>
         </div>
         <div>
-          <label for=""></label>
-          <div>
-            <input type="text" />
-            <span>kg</span>
-          </div>
+          <button type="button" id="toggleHeightUnit">Switch to Feet/Inches</button>
         </div>
       </div>
+      <div class="bmi__input--group">
+        <label for="weight">Weight</label>
+        <div class="bmi__input--field">
+          <input
+            type="text"
+            id="weight"
+            name="weight"
+            placeholder="Enter weight"
+          />
+          <span id="weightUnit">kg</span>
+        </div>
+        <div>
+          <button type="button" id="toggleWeightUnit">Switch to Pounds</button>
+        </div>
+      </div>
+    </div>
 
+    <div class="bmi__calculator--result">
       <div>
-        <div>
-          <p>Your BMI is...</p>
-          <h5>3</h5>
-        </div>
-        <div>
-          <p>Your BMI suggests you’re a healthy weight. Your ideal weight is
-            between 63.3kgs - 85.2kgs.</p>
-        </div>
+        <p>Your BMI is...</p>
+        <h5 id="bmiValue">0</h5>
       </div>
-    </form>
-  </div>
-</section>
+      <div id="bmiSuggestion">
+        <p>Your BMI suggests you’re a healthy weight. Your ideal weight is
+          between 63.3kgs - 85.2kgs.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="bmi__calculator--button">Calculate BMI</button>
+  </form>
+</div>
