@@ -21,15 +21,49 @@
 
 .search {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 20px;
   align-items: center;
   width: fit-content;
-  height: 50px;
+  min-width: 500px;
+  height: fit-content;
   padding: 15px 20px;
+  margin: 0 auto;
   background-color: var(--bg-secondary-color);
   border-radius: 10px;
 
   & div {
+    width: 100%;
+
+    & label {
+      margin-bottom: 10px;
+      font-size: var(--fontSize-sm);
+    }
+  }
+
+  & .keyword__container,
+  .exclude__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .options__container {
+    display: flex;
+    gap: 20px;
+
+    & div {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    & .select--input {
+      width: fit-content;
+      flex: none;
+    }
+  }
+
+  /* & div {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -42,18 +76,29 @@
     min-width: 70px;
     border-radius: 5px;
     padding: 0 5px;
-  }
+  } */
 
-  & div select {
-    background-color: var(--transparent);
+  & div select,
+  input {
+    background-color: var(--bg-secondary-color);
     color: var(--inverse-color);
     border: 1px solid var(--inverse-color);
+    min-height: 30px;
+    min-width: 70px;
+    border-radius: 5px;
+    padding: 0 5px;
   }
 
   & div .submit {
     background-color: var(--primary-color);
     color: var(--white-color);
+    width: 100%;
+    min-height: 30px;
+    min-width: 70px;
+    border-radius: 5px;
+    padding: 10px 0;
     font-weight: bold;
+    font-size: var(--fontSize-sm);
     border: none;
     cursor: pointer;
   }
@@ -173,9 +218,9 @@
 }
 
 .card--info {
-  & .secondary--muscles {
+  & .diets {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     gap: 10px;
     flex-wrap: wrap;
     width: 100%;
@@ -192,18 +237,12 @@
       border-radius: 4px;
     }
   }
-  & .instructions {
-    & p {
-      margin-bottom: 5px;
+  & .summary {
+    & h6 {
+      margin: 5px 0;
       font-weight: bold;
       margin-bottom: 15px;
-    }
-
-    & ol {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-left: 20px;
+      font-size: var(--fontSize-sm);
     }
   }
 }

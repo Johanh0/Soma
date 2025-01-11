@@ -34,7 +34,6 @@ app.get("/", (req, res) => {
   });
 });
 
-
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
@@ -43,7 +42,6 @@ app.get("/signup", (req, res) => {
     script: "js/signup.js",
   });
 });
-
 
 app.get("/login", (req, res) => {
   res.render("login", {
@@ -64,9 +62,14 @@ app.get("/exercise", (req, res) => {
   });
 });
 
-// app.get("/recipes", (req, res) => {
-//   //
-// });
+app.get("/recipes", (req, res) => {
+  res.render("recipes", {
+    layout: "main",
+    title: "Soma Recipes",
+    style: "css/recipes.css",
+    script: "js/recipes.js",
+  });
+});
 
 app.get("/bmi", (req, res) => {
   res.render("bmi", {
@@ -80,17 +83,6 @@ app.get("/bmi", (req, res) => {
 app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "Soma chatAI" });
 });
-
-app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "Soma login" });
-});
-// Routers
-const apiExercise = require("./routes/api/exercise.js");
-const apiRecipe = require("./routes/api/recipe.js");
-const { title } = require("process");
-
-app.use(`${API_VERSION}/exercise`, apiExercise);
-app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
