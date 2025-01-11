@@ -4,7 +4,7 @@ const app = express();
 const { create } = require("express-handlebars");
 
 // PORT
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
@@ -34,6 +34,24 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/signup", (req, res) => {
+  res.render("signup", {
+    layout: "main",
+    title: "MindWay",
+    style: "css/signup.css",
+    script: "js/signup.js",
+  });
+});
+
+app.get("/login", (req, res) => {
+  res.render("login", {
+    layout: "loginLayout",
+    title: "MindWay login",
+    style: "css/login.css",
+    script: "js/login.js",
+  });
+});
+
 app.get("/exercise", (req, res) => {
   res.render("exercise", {
     layout: "main",
@@ -60,13 +78,9 @@ app.get("/chatai", (req, res) => {
   res.render("chatai", { layout: "main", title: "Soma chatAI" });
 });
 
-app.get("/login", (req, res) => {
-  res.render("login", { layout: "main", title: "Soma login" });
-});
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
 const apiRecipe = require("./routes/api/recipe.js");
-const { title } = require("process");
 
 app.use(`${API_VERSION}/exercise`, apiExercise);
 app.use(`${API_VERSION}/recipe`, apiRecipe);

@@ -282,6 +282,146 @@
 @media (max-width: 779px) {
   .hero {
     flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 4px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 2px);
+  }
+
+  @media (max-width: 1200px) {
+    .hero__grid,
+    .fitness-home__grid,
+    .recipe-home__grid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns for this range */
+      gap: 20px;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(2, 1fr); /* Ensure two columns here */
+    gap: 15px;
+  }
+}
+@media (max-width: 950px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Maintain two columns for tablet screens */
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Still maintain two columns for smaller tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr; /* Stack vertically only on very small screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 8px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 4px);
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .hero .primary-btn {
+    margin: 0 auto; /* Center the button horizontally */
+  }
+
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chatbot-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .fitness-home,
+  .recipe-home,
+  .chatbot-home {
+    padding: 15px 10px;
+  }
+
+  .fitness-home h1,
+  .recipe-home h1,
+  .chatbot-home h1 {
+    font-size: calc(var(--fontSize-lg) - 10px);
+  }
+
+  .fitness-home p,
+  .recipe-home p,
+  .chatbot-home p {
+    font-size: calc(var(--fontSize-md) - 6px);
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 12px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 6px);
+  }
+  .hero .primary-btn {
+    margin: 0 auto; /* Center the button horizontally */
+  }
+  .fitness-card,
+  .recipe-card,
+  .chatbot-card {
+    padding: 15px;
+    font-size: calc(var(--fontSize-sm) - 2px);
+  }
+
+  .chatbot-info {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .chatbot-card p {
+    line-height: 1.4;
   }
 
   .fitness-home__grid,
