@@ -1,0 +1,169 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  font-size: var(--fontSize-md);
+
+  & h1 {
+    text-align: center;
+    max-width: 600px;
+  }
+}
+
+.search {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  height: 50px;
+  padding: 15px 20px;
+  background-color: var(--bg-secondary-color);
+  border-radius: 10px;
+
+  & div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & div .select--exercise,
+  .select--target,
+  .submit {
+    min-height: 30px;
+    min-width: 70px;
+    border-radius: 5px;
+  }
+
+  & div select {
+    background-color: var(--transparent);
+    color: var(--inverse-color);
+    border: 1px solid var(--inverse-color);
+  }
+
+  & div .submit {
+    background-color: black;
+    color: var(--white-color);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+  width: 100%;
+  height: fit-content;
+
+  & .result--card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 250px;
+    min-height: 250px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--bg-secondary-color);
+    cursor: pointer;
+  }
+
+  & .card--img {
+    width: 100%;
+    height: 200px;
+    background-color: white;
+    border-radius: 5px;
+
+    & img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+    }
+  }
+
+  & .card--info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    & h3 {
+      font-size: var(--fontSize-sm);
+      text-transform: uppercase;
+      font-weight: bold;
+      color: var(--font-color);
+    }
+
+    & h4 {
+      font-size: var(--fontSize-sm);
+    }
+  }
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+
+  & .modal--card {
+    max-width: 400px;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 500px;
+    min-height: 450px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: var(--bg-secondary-color);
+
+    & .card--img {
+      object-fit: cover;
+      width: 100%;
+      height: 300px;
+      background-color: var(--bg-secondary-color);
+      border-radius: 5px;
+
+      & img {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+      }
+    }
+
+    & .card--info {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      & h3 {
+        font-size: var(--fontSize-sm);
+        text-transform: uppercase;
+        font-weight: bold;
+        color: var(--font-color);
+      }
+
+      & h4 {
+        font-size: var(--fontSize-sm);
+      }
+    }
+  }
+}
