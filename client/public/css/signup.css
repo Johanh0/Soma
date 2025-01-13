@@ -6,11 +6,10 @@
 
 h1 {
   font-weight: bold;
-  margin: 0; 
+  margin: 0;
   font-size: 4rem;
   padding-top: 50px;
 }
-
 
 p {
   font-size: 16px;
@@ -20,16 +19,21 @@ p {
   margin: 20px 0 30px;
 }
 
+<<<<<<< HEAD
 a {
   color: black;
+=======
+/* a {
+  color: orange;
+>>>>>>> 9f9f8c8 (routes updated)
   font-size: 1.2rem;
   text-decoration: none;
   margin: 15px 0;
-}
+} */
 
 a:hover {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 button {
@@ -50,8 +54,6 @@ button {
 button:hover {
   transform: scale(0.95);
 }
-
-
 
 form {
   background-color: #ffffff;
@@ -89,27 +91,26 @@ input {
   justify-content: center;
 }
 
- .modal-content {
-    background-color: #fff;
-    margin: 20px auto;
-    width: 80%;
-    max-width: 500px;
-  } 
+.modal-content {
+  background-color: #fff;
+  margin: 20px auto;
+  width: 80%;
+  max-width: 500px;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  color: red;
+  font-size: 1.4rem;
+  margin-bottom: 5px;
+}
+
+@media screen and (max-width: 570px) {
+  h1 {
+    font-size: 3rem;
   }
-
-  li {
-    color: red;
-    font-size: 1.4rem;
-    margin-bottom: 5px;
-  } 
-
-
-@media screen and (max-width: 570px){
-    h1 {
-        font-size: 3rem;
-    }
 }
