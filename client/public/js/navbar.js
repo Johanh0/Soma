@@ -1,6 +1,6 @@
-export default function navbarToggle() {
+export function navbarToggle() {
   // Get the menu icon
-  const menuIcon = document.querySelector(".navbar__menu");
+  const menuIcon = document.querySelector(".navbar--icon");
   const menu = document.querySelector(".menu");
 
   //   Add the event to toggle the menu
@@ -22,4 +22,54 @@ export default function navbarToggle() {
         break;
     }
   });
+}
+
+export function themeToggle() {
+  const themeIcon = document.querySelector(".theme--icon");
+  const userIcon = document.querySelector(".user--icon");
+  const bodyElement = document.querySelector("body");
+
+  themeIcon.addEventListener("click", () => {
+    // Add the toggle method
+    bodyElement.classList.toggle("dark--theme");
+    // Check if the menu is open
+    const isDarkTheme = bodyElement.classList.contains("dark--theme");
+    // Save in localStorage the state of the theme color
+    localStorage.setItem("color-theme", `${isDarkTheme}`);
+    const srcPath = "/assets/svg/";
+    // Switch the icon and open or close the menu depending on the condition
+    switch (isDarkTheme) {
+      case true:
+        themeIcon.src = `${srcPath}/sun.svg`;
+        userIcon.src = `${srcPath}/user-dark.svg`;
+        break;
+      case false:
+        themeIcon.src = `${srcPath}/moon.svg`;
+        userIcon.src = `${srcPath}/user.svg`;
+
+        break;
+    }
+  });
+}
+
+export function storageTheme() {
+  const themeIcon = document.querySelector(".theme--icon");
+  const userIcon = document.querySelector(".user--icon");
+  const bodyElement = document.querySelector("body");
+  const isDarkTheme = localStorage.getItem("color-theme");
+  const srcPath = "/assets/svg/";
+  // Switch the icon and open or close the menu depending on the condition
+  switch (isDarkTheme) {
+    case "true":
+      themeIcon.src = `${srcPath}/sun.svg`;
+      userIcon.src = `${srcPath}/user-dark.svg`;
+
+      bodyElement.classList.add("dark--theme");
+      break;
+    case "false":
+      themeIcon.src = `${srcPath}/moon.svg`;
+      userIcon.src = `${srcPath}/user.svg`;
+      bodyElement.classList.remove("dark--theme");
+      break;
+  }
 }

@@ -9,8 +9,8 @@
 
 html {
   font-family: "Lato", serif;
-  color: var(--black-color);
-  background-color: var(--white-color);
+  /* color: var(--black-color);
+  background-color: var(--white-color); */
 }
 
 body {
@@ -19,6 +19,8 @@ body {
   min-height: 100vh;
   grid-template-rows: auto 1fr auto;
   font-size: var(--text-md);
+  background-color: var(--bg-color);
+  color: var(--font-color);
 }
 
 body :where(header, main, .footer) {
@@ -29,14 +31,20 @@ body :where(header, main, .footer) {
 }
 
 a {
-  color: var(--black-color);
+  color: var(--font-color);
   text-decoration: none;
+}
+
+input,
+select {
+  outline-color: var(--primary-color);
 }
 
 /* Buttons Styles */
 .primary-btn {
   display: block;
   max-width: 200px;
+  min-width: 200px;
   height: fit-content;
   padding: 15px 0;
   text-align: center;
@@ -44,6 +52,10 @@ a {
   color: var(--white-color);
   background-color: var(--primary-btn-color);
   border-radius: 8px;
+  margin: auto;
+}
+.primary-btn:hover {
+  background-color: var(--hover-color);
 }
 
 .secondary-btn {
