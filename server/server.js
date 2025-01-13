@@ -45,10 +45,19 @@ app.get("/signup", (req, res) => {
 
 app.get("/login", (req, res) => {
   res.render("login", {
-    layout: "loginLayout",
+    layout: "main",
     title: "MindWay login",
     style: "css/login.css",
     script: "js/login.js",
+  });
+});
+
+app.get("/profile", (req, res) => {
+  res.render("profile", {
+    layout: "main",
+    title: "Soma profile",
+    style: "css/profile.css",
+    script: "js/profile.js",
   });
 });
 
@@ -81,7 +90,7 @@ app.get("/bmi", (req, res) => {
 });
 
 app.get("/chatai", (req, res) => {
-  res.render("chatai", { layout: "main", title: "Soma chatAI" });
+  res.render("chatai", { layout: "main", title: "Soma chatAI", style: "css/chatai.css", script:"js/chatai.js"});
 });
 
 // Routers
