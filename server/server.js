@@ -86,9 +86,11 @@ app.get("/chatai", (req, res) => {
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
 const apiRecipe = require("./routes/api/recipe.js");
+const apiChatAI = require("./routes/api/chatai.js");
 
 app.use(`${API_VERSION}/exercise`, apiExercise);
 app.use(`${API_VERSION}/recipe`, apiRecipe);
+app.use(`${API_VERSION}/chatai`, apiChatAI);
 
 // Handle 404 - Not Found
 app.get("/*", (req, res) => {
