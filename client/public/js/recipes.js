@@ -54,11 +54,7 @@ async function renderRecipes(requireValues) {
       resultContainer.innerHTML += `
         <article class="result--card" data-id="${recipe.id}">
             <div class="card--img">
-<<<<<<< HEAD
-                <img src="${recipe.image}" alt="" loading="lazy" >
-=======
                 <img src="${recipe.image}" alt="${recipe.title} recipe image" loading="lazy" >
->>>>>>> front-end
             </div>
             <div class="card--info">
                 <h3>${recipe.title}</h3>

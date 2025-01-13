@@ -35,7 +35,7 @@ button {
   cursor: pointer;
   border-radius: 20px;
   border: 1px solid #ffbf99;
-  background-color: orange;
+  background-color: #495057;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -43,7 +43,6 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
-  background: #ff4d00c7;
   margin-top: 10px;
 }
 

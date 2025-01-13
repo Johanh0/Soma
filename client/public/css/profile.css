@@ -1,0 +1,34 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+@import url("signup.css"); 
+@import url("login.css");
+
+#profile{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  
+  .user-card {
+    width: 750px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .profile-body {
+    padding: 10px;
+  }
+
+  h3 {
+    margin: 10px;
+  }
+  
