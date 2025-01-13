@@ -54,7 +54,7 @@ async function renderRecipes(requireValues) {
       resultContainer.innerHTML += `
         <article class="result--card" data-id="${recipe.id}">
             <div class="card--img">
-                <img src="${recipe.image}" alt="" loading="lazy" >
+                <img src="${recipe.image}" alt="${recipe.title} recipe image" loading="lazy" >
             </div>
             <div class="card--info">
                 <h3>${recipe.title}</h3>
@@ -115,7 +115,7 @@ function openModal(data) {
   modalView.innerHTML = `
       <div class="modal--card">
       <div class="card--img">
-        <img src="${data.image}" alt="" loading="lazy" />
+        <img src="${data.image}" alt="${recipe.title} recipe image" loading="lazy" />
       </div>
       <div class="card--info">
         <h3>${data.title}</h3>

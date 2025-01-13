@@ -114,7 +114,7 @@ searchForm.addEventListener("submit", async (event) => {
     resultContainer.innerHTML += `
         <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-            <img src="${data.gifUrl}" alt="" loading="lazy" >
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
             <h3>${data.target} - ${data.name}</h3>
@@ -133,7 +133,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     resultContainer.innerHTML += `
         <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-            <img src="${data.gifUrl}" alt="" loading="lazy" >
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
             <h3>${data.name}</h3>
