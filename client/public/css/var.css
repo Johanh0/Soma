@@ -5,6 +5,11 @@
   --transparent: transparent;
   --black-color: black;
   --white-color: #ffffff;
+  --soft-primary-color-1: linear-gradient(90deg, #ff6a13, #ffffff);
+  --soft-primary-color-2: linear-gradient(90deg, #ffffff, #ff6a13);
+  --soft-secondary-color: white;
+  --soft-black-color: #4f4f4f;
+ 
 
   /* --footer-color: linear-gradient(#ffffff, #ff6a13); */
 
