@@ -1,31 +1,12 @@
 import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
-// Ensure the user is authenticated
-const token = localStorage.getItem("token");
-console.log("Token from localStorage:", token);
-
-// if (!token) {
-//   alert("You must log in to access this page.");
-//   window.location.href = "/login";
-//   return;
-// }
-
-// Fetch the exercise page to ensure the user is authenticated
-fetch("/exercise", {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-})
+// Ensure the user is authenticated and fetch the exercise page
+fetch("/exercise")
   .then((response) => {
-    console.log("Authorization Header Sent:", `Bearer ${token}`);
-    console.log("Response status:", response.status);
-
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         alert("Your session has expired. Please log in again.");
-        localStorage.removeItem("token");
         window.location.href = "/login";
       }
       throw new Error("Unauthorized access");
@@ -75,8 +56,8 @@ async function fetchAllExercises() {
 
     const data = await response.json();
     console.log("Fetched exercises from API:", data);
-
     localStorage.setItem("exercises", JSON.stringify(data));
+    return data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
     alert("Failed to fetch exercises. Please try again later.");
@@ -202,10 +183,6 @@ if (!allExercises || !allExercises.data) {
   });
 
   handleModal();
-}
-
-// Trigger functions after the DOM were load
-document.addEventListener("DOMContentLoaded", () => {
   storageTheme();
   themeToggle();
   navbarToggle();

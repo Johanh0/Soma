@@ -7,23 +7,24 @@ const bcrypt = require("bcryptjs");
 const db = require("./database/db");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
+app.use(cookieParser());
 app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET;
+
 // PORT
 const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
-
+// Middleware to authenticate token from cookies
 function authenticateToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  console.log("Authorization Header:", req.headers.authorization);
+  const token = req.cookies.token;
 
   if (!token) {
-    console.log("No token provided");
+    console.log("No token provided in cookies");
     return res.status(401).render("401", {
       layout: "main",
       title: "Unauthorized",
@@ -39,19 +40,15 @@ function authenticateToken(req, res, next) {
       return res.status(403).render("403", {
         layout: "main",
         title: "Forbidden",
-        message:
-          "Your session has expired or your token is invalid. Please log in again.",
+        message: "Your session has expired or your token is invalid. Please log in again.",
         style: "css/home.css",
         script: "js/home.js",
       });
     }
-
-    console.log("Authenticated User:", user); // Debugging
-    req.user = user;
+    req.user = user; 
     next();
   });
 }
-
 // Set handlebars
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"),
@@ -62,13 +59,8 @@ const hbs = create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
-// Middleware
+// Path static client directory
 app.use(express.static(path.join(__dirname, "../client/public")));
-app.use(bodyParser.urlencoded({ extended: true }));
-console.log(
-  "Static files served from:",
-  path.join(__dirname, "../client/public")
-);
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -90,18 +82,17 @@ app.get("/signup", (req, res) => {
   });
 });
 
-// Define /login route
 app.get("/login", (req, res) => {
   res.render("login", {
     layout: "main",
-    title: "Soma Login",
+    title: "Soma login",
     style: "css/login.css",
     script: "js/login.js",
   });
 });
 
 // Protected Routes
-app.get("/exercise", (req, res) => {
+app.get("/exercise", authenticateToken, (req, res) => {
   res.render("exercise", {
     layout: "main",
     title: "Soma Exercise",
@@ -110,7 +101,7 @@ app.get("/exercise", (req, res) => {
   });
 });
 
-app.get("/bmi", (req, res) => {
+app.get("/bmi", authenticateToken, (req, res) => {
   res.render("bmi", {
     layout: "main",
     title: "Soma BMI",
@@ -119,16 +110,16 @@ app.get("/bmi", (req, res) => {
   });
 });
 
-app.get("/chatai", (req, res) => {
+app.get("/chatai", authenticateToken, (req, res) => {
   res.render("chatai", {
     layout: "main",
-    title: "Soma chatAI",
+    title: "Soma ChatAI",
     style: "css/chatai.css",
     script: "js/chatai.js",
   });
 });
 
-app.get("/recipes", (req, res) => {
+app.get("/recipes", authenticateToken, (req, res) => {
   res.render("recipes", {
     layout: "main",
     title: "Soma Recipes",
@@ -138,16 +129,13 @@ app.get("/recipes", (req, res) => {
 });
 
 // Profile Route
-app.get("/profile", async (req, res) => {
+app.get("/profile", authenticateToken, async (req, res) => {
   try {
-    console.log("Fetching profile for user ID:", req.user.id); // Debugging
+    console.log("Fetching profile for user ID:", req.user.id);
 
     const [userRows] = await db.connection
       .promise()
-      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [
-        req.user.id,
-      ]);
-
+      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
     if (userRows.length === 0) {
       console.log("No user found with ID:", req.user.id);
       return res.status(404).send("User not found.");
@@ -169,10 +157,15 @@ app.get("/profile", async (req, res) => {
 
 // Logout Route
 app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   res.redirect("/login");
 });
 
-// Add POST routes for signup and login
+// Signup Route
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -201,13 +194,15 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Login Route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [userRows] = await db.connection
-      .promise()
-      .query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
+    const [userRows] = await db.connection.promise().query(
+      "SELECT * FROM users WHERE LOWER(email) = LOWER(?)",
+      [email]
+    );
 
     if (userRows.length === 0) {
       return res.status(400).json({ error: "User not found." });
@@ -223,8 +218,14 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
       expiresIn: "1h",
     });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
 
-    res.json({ success: true, token, redirect: "/" });
+    res.status(200).json({ success: true, redirect: "/" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error." });
