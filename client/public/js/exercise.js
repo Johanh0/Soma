@@ -3,24 +3,24 @@ import footerYear from "/js/footer.js";
 
 // Ensure the user is authenticated
 const token = localStorage.getItem("token");
-console.log("Token from localStorage:", token); 
+console.log("Token from localStorage:", token);
 
 if (!token) {
   alert("You must log in to access this page.");
   window.location.href = "/login";
-  return; 
+  return;
 }
 
 // Fetch the exercise page to ensure the user is authenticated
 fetch("/exercise", {
   method: "GET",
   headers: {
-    Authorization: `Bearer ${token}`, 
+    Authorization: `Bearer ${token}`,
   },
 })
   .then((response) => {
-    console.log("Authorization Header Sent:", `Bearer ${token}`); 
-    console.log("Response status:", response.status); 
+    console.log("Authorization Header Sent:", `Bearer ${token}`);
+    console.log("Response status:", response.status);
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
@@ -33,8 +33,8 @@ fetch("/exercise", {
     return response.text();
   })
   .then((html) => {
-    console.log("Page content fetched successfully"); 
-    document.body.innerHTML = html; 
+    console.log("Page content fetched successfully");
+    document.body.innerHTML = html;
   })
   .catch((error) => {
     console.error("Error fetching page:", error);
@@ -53,14 +53,14 @@ async function fetchAllExercises() {
     const isStorage = localStorage.getItem("exercises");
 
     if (isStorage != null) {
-      console.log("Loaded exercises from localStorage"); 
+      console.log("Loaded exercises from localStorage");
       return JSON.parse(isStorage);
     }
 
-    console.log("Fetching exercises from API"); 
+    console.log("Fetching exercises from API");
     const response = await fetch(`/api/v1/exercise/workouts`, {
       headers: {
-        Authorization: `Bearer ${token}`, 
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -74,9 +74,9 @@ async function fetchAllExercises() {
     }
 
     const data = await response.json();
-    console.log("Fetched exercises from API:", data); 
+    console.log("Fetched exercises from API:", data);
 
-    localStorage.setItem("exercises", JSON.stringify(data)); 
+    localStorage.setItem("exercises", JSON.stringify(data));
   } catch (error) {
     console.error("Error fetching exercises:", error);
     alert("Failed to fetch exercises. Please try again later.");
@@ -170,7 +170,7 @@ searchForm.addEventListener("submit", async (event) => {
     resultContainer.innerHTML += `
       <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-          <img src="${data.gifUrl}" alt="" loading="lazy" />
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
           <h3>${data.target} - ${data.name}</h3>
@@ -191,7 +191,7 @@ if (!allExercises || !allExercises.data) {
     resultContainer.innerHTML += `
       <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-          <img src="${data.gifUrl}" alt="" loading="lazy" />
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
           <h3>${data.name}</h3>
