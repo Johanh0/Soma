@@ -12,26 +12,6 @@ h1 {
   padding-bottom: 10px;
 }
 
-/* p {
-  font-size: 16px;
-  font-weight: 100;
-  line-height: 22px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
-} */
-
-/* a {
-    color: black;
-    font-size: 1.2rem;
-    text-decoration: none;
-    margin: 15px 0;
-  } */
-
-/* a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-} */
-
 button {
   cursor: pointer;
   border-radius: 20px;
@@ -53,7 +33,7 @@ button:hover {
 }
 
 form {
-  background-color: #ffffff;
+  background-color: var(--bg-secondary-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,7 +53,7 @@ input {
 }
 
 .log-container {
-  background-color: white;
+  background-color: var(--bg-secondary-color);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
@@ -82,8 +62,12 @@ input {
 }
 
 .forgot-password {
-  color: orange;
+  color: var(--primary-color);
   font-size: 1.1rem;
+}
+
+.login-new_user {
+  margin-top: 20px;
 }
 
 #username-error {

@@ -38,6 +38,7 @@ a {
 input,
 select {
   outline-color: var(--primary-color);
+  border-radius: 10px;
 }
 
 /* Buttons Styles */

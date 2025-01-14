@@ -11,26 +11,6 @@ h1 {
   padding-top: 50px;
 }
 
-/* p {
-  font-size: 16px;
-  font-weight: 100;
-  line-height: 22px;
-  letter-spacing: 0.5px;
-  margin: 20px 0 30px;
-} */
-
-/* a {
-  color: orange;
-  font-size: 1.2rem;
-  text-decoration: none;
-  margin: 15px 0;
-} */
-
-a:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 button {
   cursor: pointer;
   border-radius: 20px;
@@ -51,7 +31,7 @@ button:hover {
 }
 
 form {
-  background-color: #ffffff;
+  background-color: var(--bg-secondary-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,7 +50,7 @@ input {
 }
 
 .container {
-  background-color: white;
+  background-color: var(--bg-secondary-color);
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
@@ -93,16 +73,18 @@ input {
   max-width: 500px;
 }
 
+.sing-up__login {
+  margin-top: 20px;
+
+  & a {
+    color: var(--primary-color);
+  }
+}
+
 ul {
   list-style-type: none;
   padding: 0;
 }
-
-/* li {
-  color: red;
-  font-size: 1.4rem;
-  margin-bottom: 5px;
-} */
 
 @media screen and (max-width: 570px) {
   h1 {
