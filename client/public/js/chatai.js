@@ -61,19 +61,6 @@ async function generateAIResponse(userInput) {
   // Example simple AI responses based on user input
   console.log(userInput);
   const userInputValue = userInput.toLowerCase();
-  // if (userInputValue.includes("hello" || "hey" || "hi")) {
-  //   return "Hello! How can SOMA assist you today?";
-  // } else if (userInputValue.includes("how are you")) {
-  //   return "SOMA is doing great! How about you?";
-  // } else if (userInputValue.includes("help")) {
-  //   return "SOMA will be glad to assist? What can I help you with today?";
-  // } else if (
-  //   userInputValue.toLowerCase().includes("bye" || "goodbye" || "see you later")
-  // ) {
-  //   return "Goodbye from SOMA! Have a nice day!";
-  // } else {
-  //   return await chatResponse(userInputValue);
-  // }
 
   const aiMessage = await chatResponse(userInputValue);
   return aiMessage;

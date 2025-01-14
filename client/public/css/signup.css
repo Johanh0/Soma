@@ -86,6 +86,10 @@ ul {
   padding: 0;
 }
 
+#errorMessages {
+  background-color: var(--bg-secondary-color);
+}
+
 @media screen and (max-width: 570px) {
   h1 {
     font-size: 3rem;
