@@ -29,8 +29,8 @@ function authenticateToken(req, res, next) {
       layout: "main",
       title: "Unauthorized",
       message: "You must log in to access this page.",
-      style: "css/home.css",
-      script: "js/home.js",
+      style: "css/404.css",
+      script: "js/404.js",
     });
   }
 
@@ -40,12 +40,14 @@ function authenticateToken(req, res, next) {
       return res.status(403).render("403", {
         layout: "main",
         title: "Forbidden",
-        message: "Your session has expired or your token is invalid. Please log in again.",
-        style: "css/home.css",
-        script: "js/home.js",
+        message:
+          "Your session has expired or your token is invalid. Please log in again.",
+        style: "css/404.css",
+        script: "js/404.js",
       });
     }
-    req.user = user; 
+
+    req.user = user;
     next();
   });
 }
@@ -135,7 +137,10 @@ app.get("/profile", authenticateToken, async (req, res) => {
 
     const [userRows] = await db.connection
       .promise()
-      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
+      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [
+        req.user.id,
+      ]);
+
     if (userRows.length === 0) {
       console.log("No user found with ID:", req.user.id);
       return res.status(404).send("User not found.");
@@ -153,6 +158,15 @@ app.get("/profile", authenticateToken, async (req, res) => {
     console.error("Error fetching profile data:", error);
     res.status(500).send("Internal server error.");
   }
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact", {
+    layout: "main",
+    title: "Soma contact",
+    style: "css/contact.css",
+    script: "js/contact.js",
+  });
 });
 
 // Logout Route
@@ -199,10 +213,9 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [userRows] = await db.connection.promise().query(
-      "SELECT * FROM users WHERE LOWER(email) = LOWER(?)",
-      [email]
-    );
+    const [userRows] = await db.connection
+      .promise()
+      .query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
 
     if (userRows.length === 0) {
       return res.status(400).json({ error: "User not found." });

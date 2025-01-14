@@ -59,6 +59,7 @@ input {
   overflow: hidden;
   max-width: 100%;
   min-height: 500px;
+  border-radius: 10px;
 }
 
 .forgot-password {

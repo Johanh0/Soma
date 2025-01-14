@@ -53,7 +53,6 @@ select {
   color: var(--white-color);
   background-color: var(--primary-btn-color);
   border-radius: 8px;
-  margin: auto;
 }
 .primary-btn:hover {
   background-color: var(--hover-color);
