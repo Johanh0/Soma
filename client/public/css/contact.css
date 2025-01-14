@@ -1,0 +1,94 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+@import url("login.css");
+@import url("signup.css");
+
+.contact-form-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    min-width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h2 {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    text-align: left;
+    width: 100%;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+input[type="text"], input[type="email"], textarea {
+    min-width: 100%;
+    width: 350px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    box-shadow: 0 0 5px rgba(92, 157, 247, 0.3);
+}
+
+.submit-btn {
+    background-color: var(--primary-btn-color);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: black;
+}
+
+#message-error{
+color: red;
+}
+
+
+@media (max-width: 725px) and (min-width: 322px) {
+    .contact-form-container {
+        padding: 20px;
+        margin-top: 50px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+    }
+
+    .submit-btn {
+        font-size: 12px;
+    }
+    footer {
+        margin-top: 150px;
+        margin-bottom: 0px;
+    }
+    
+}

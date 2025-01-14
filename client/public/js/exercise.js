@@ -25,6 +25,7 @@ const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
 const loader = document.querySelector(".loader");
+
 const resultContainer = document.querySelector(".result");
 const modalView = document.querySelector(".modal");
 
@@ -71,21 +72,23 @@ function openModal(data) {
 
   modalView.innerHTML = `
     <div class="modal--card">
-      <div class="card--img">
-        <img src="${data.gifUrl}" alt="" loading="lazy" />
+    <div class="card--img">
+      <img src="${data.gifUrl}" alt="" loading="lazy" />
+    </div>
+    <div class="card--info">
+      <h3>${data.name}</h3>
+      <h5>${data.target}</h5>
+      <div class="secondary--muscles">
+      <p>Other muscles:</p>
       </div>
-      <div class="card--info">
-        <h3>${data.name}</h3>
-        <h5>${data.target}</h5>
-        <div class="secondary--muscles">
-          <p>Other muscles:</p>
-        </div>
-        <div class="instructions">
-          <p>Instructions</p>
-          <ol></ol>
-        </div>
+      <div class="instructions">
+      <p>Instructions</p>
+        <ol>
+  
+        </ol>
       </div>
     </div>
+  </div>
   `;
 
   const secondaryMusclesElement = document.querySelector(".secondary--muscles");
@@ -99,7 +102,7 @@ function openModal(data) {
 
   data.instructions.forEach((instruction) => {
     instructionsElement.innerHTML += `
-      <li>${instruction}</li>
+    <li>${instruction}</li>
     `;
   });
 }
@@ -107,6 +110,9 @@ function openModal(data) {
 function closeModal() {
   modalView.style.display = "none";
 }
+
+
+modalView.addEventListener("click", closeModal);
 
 modalView.addEventListener("click", (event) => {
   if (event.target === modalView) {
@@ -152,29 +158,26 @@ searchForm.addEventListener("submit", async (event) => {
   handleModal();
 });
 
-// Load exercises on page load
-if (!allExercises || !allExercises.data) {
-  alert("No exercises available.");
-} else {
+
+// Trigger functions after the DOM is loaded
+document.addEventListener("DOMContentLoaded", async () => {
   allExercises.data.slice(0, 20).forEach((data) => {
     resultContainer.innerHTML += `
-      <article class="result--card" data-id="${data.id}">
+        <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-          <img src="${data.gifUrl}" alt="" loading="lazy" />
+            <img src="${data.gifUrl}" alt="" loading="lazy" >
         </div>
         <div class="card--info">
-          <h3>${data.name}</h3>
-          <h5>${data.target}</h5>
+            <h3>${data.name}</h3>
+            <h5>${data.target}</h5>
         </div>
-      </article>
+    </article>
     `;
   });
 
   handleModal();
-}
-
-// Initialize UI features
-storageTheme();
-themeToggle();
-navbarToggle();
-footerYear();
+  storageTheme();
+  themeToggle();
+  navbarToggle();
+  footerYear();
+});

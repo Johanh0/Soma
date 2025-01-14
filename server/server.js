@@ -51,7 +51,6 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
-
 // Set handlebars
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"),
@@ -60,14 +59,14 @@ const hbs = create({
 });
 
 app.engine("hbs", hbs.engine);
+
 app.set("view engine", "hbs");
 
-// Middleware
+// Path static client directory
 app.use(express.static(path.join(__dirname, "../client/public")));
-app.use(bodyParser.urlencoded({ extended: true }));
-console.log("Static files served from:", path.join(__dirname, "../client/public"));
+console.log(path.join(__dirname, "../client/public"));
 
-// Route: Home
+// Route's pages
 app.get("/", (req, res) => {
   res.render("home", {
     layout: "main",
@@ -81,17 +80,16 @@ app.get("/", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
-    title: "MindWay Signup",
+    title: "Soma Signup",
     style: "css/signup.css",
     script: "js/signup.js",
   });
 });
 
-// Route: Login Page
 app.get("/login", (req, res) => {
   res.render("login", {
-    layout: "loginLayout",
-    title: "MindWay Login",
+    layout: "main",
+    title: "Soma login",
     style: "css/login.css",
     script: "js/login.js",
   });
@@ -250,7 +248,7 @@ app.get("/*", (req, res) => {
   });
 });
 
-// Start Server
+// Start server
 app.listen(PORT, () => {
   console.log(`Server is live on port ${PORT}`);
 });
