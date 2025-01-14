@@ -1,15 +1,53 @@
 import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
+// Ensure the user is authenticated
+const token = localStorage.getItem("token");
+console.log("Token from localStorage:", token);
+
+if (!token) {
+  alert("You must log in to access this page.");
+  window.location.href = "/login";
+  return;
+}
+
+// Fetch the exercise page to ensure the user is authenticated
+fetch("/exercise", {
+  method: "GET",
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+})
+  .then((response) => {
+    console.log("Authorization Header Sent:", `Bearer ${token}`);
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) {
+        alert("Your session has expired. Please log in again.");
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+      }
+      throw new Error("Unauthorized access");
+    }
+    return response.text();
+  })
+  .then((html) => {
+    console.log("Page content fetched successfully");
+    document.body.innerHTML = html;
+  })
+  .catch((error) => {
+    console.error("Error fetching page:", error);
+  });
+
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
 const loader = document.querySelector(".loader");
-
 const resultContainer = document.querySelector(".result");
 const modalView = document.querySelector(".modal");
 
-// Fetch all exercises from the API
+// Fetch all exercises from API or localStorage
 async function fetchAllExercises() {
   try {
     const isStorage = localStorage.getItem("exercises");
@@ -19,11 +57,17 @@ async function fetchAllExercises() {
       return JSON.parse(isStorage);
     }
 
-    const response = await fetch(`/api/v1/exercise/workouts`);
+    console.log("Fetching exercises from API");
+    const response = await fetch(`/api/v1/exercise/workouts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         alert("Your session has expired. Please log in again.");
+        localStorage.removeItem("token");
         window.location.href = "/login";
       }
       throw new Error("Failed to fetch exercises");
@@ -42,7 +86,6 @@ async function fetchAllExercises() {
 
 async function handleModal() {
   const allExercises = await fetchAllExercises();
-
   const allCards = document.querySelectorAll(".result--card");
 
   allCards.forEach((card) => {
@@ -59,23 +102,21 @@ function openModal(data) {
 
   modalView.innerHTML = `
     <div class="modal--card">
-    <div class="card--img">
-      <img src="${data.gifUrl}" alt="" loading="lazy" />
-    </div>
-    <div class="card--info">
-      <h3>${data.name}</h3>
-      <h5>${data.target}</h5>
-      <div class="secondary--muscles">
-      <p>Other muscles:</p>
+      <div class="card--img">
+        <img src="${data.gifUrl}" alt="" loading="lazy" />
       </div>
-      <div class="instructions">
-      <p>Instructions</p>
-        <ol>
-
-        </ol>
+      <div class="card--info">
+        <h3>${data.name}</h3>
+        <h5>${data.target}</h5>
+        <div class="secondary--muscles">
+          <p>Other muscles:</p>
+        </div>
+        <div class="instructions">
+          <p>Instructions</p>
+          <ol></ol>
+        </div>
       </div>
     </div>
-  </div>
   `;
 
   const secondaryMusclesElement = document.querySelector(".secondary--muscles");
@@ -122,7 +163,7 @@ searchForm.addEventListener("submit", async (event) => {
   if (filterExercise.length === 0) {
     loader.style.display = "none";
     resultContainer.innerHTML = `
-      <h4>We Couldn't Find Any Data With These Options.</h4>
+      <h4>We Couldn't Found Any Data With This Options.</h4>
     `;
     return;
   }
@@ -132,7 +173,7 @@ searchForm.addEventListener("submit", async (event) => {
     resultContainer.innerHTML += `
       <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-          <img src="${data.gifUrl}" alt="" loading="lazy" />
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
           <h3>${data.target} - ${data.name}</h3>

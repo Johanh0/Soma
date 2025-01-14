@@ -7,10 +7,8 @@ const bcrypt = require("bcryptjs");
 const db = require("./database/db");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
 
 dotenv.config();
-app.use(cookieParser());
 app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -19,12 +17,14 @@ const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
-// Middleware to authenticate token from cookies
+
 function authenticateToken(req, res, next) {
-  const token = req.cookies.token;
+  const token = req.headers.authorization?.split(" ")[1];
+
+  console.log("Authorization Header:", req.headers.authorization);
 
   if (!token) {
-    console.log("No token provided in cookies");
+    console.log("No token provided");
     return res.status(401).render("401", {
       layout: "main",
       title: "Unauthorized",
@@ -46,11 +46,11 @@ function authenticateToken(req, res, next) {
         script: "js/404.js",
       });
     }
-
     req.user = user;
     next();
   });
 }
+
 // Set handlebars
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"),
@@ -61,8 +61,14 @@ const hbs = create({
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
-// Path static client directory
+// Middleware
 app.use(express.static(path.join(__dirname, "../client/public")));
+app.use(bodyParser.urlencoded({ extended: true }));
+// console.log(
+//   "Static files served from:",
+//   path.join(__dirname, "../client/public")
+// );
+
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -84,10 +90,11 @@ app.get("/signup", (req, res) => {
   });
 });
 
+// Define /login route
 app.get("/login", (req, res) => {
   res.render("login", {
     layout: "main",
-    title: "Soma login",
+    title: "Soma Login",
     style: "css/login.css",
     script: "js/login.js",
   });
@@ -133,7 +140,7 @@ app.get("/recipes", authenticateToken, (req, res) => {
 // Profile Route
 app.get("/profile", authenticateToken, async (req, res) => {
   try {
-    console.log("Fetching profile for user ID:", req.user.id);
+    console.log("Fetching profile for user ID:", req.user.id); // Debugging
 
     const [userRows] = await db.connection
       .promise()
@@ -170,16 +177,22 @@ app.get("/contact", (req, res) => {
 });
 
 // Logout Route
+// app.get("/logout", (req, res) => {
+//   res.clearCookie("token", {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     sameSite: "strict",
+//   });
+//   res.redirect("/login");
+// });
+
+// Signup Route
+// Logout Route
 app.get("/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-  });
   res.redirect("/login");
 });
 
-// Signup Route
+// Add POST routes for signup and login
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -208,7 +221,6 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// Login Route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -231,14 +243,16 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
       expiresIn: "1h",
     });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000,
-    });
+//     res.cookie("token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//       sameSite: "strict",
+//       maxAge: 3600000,
+//     });
 
-    res.status(200).json({ success: true, redirect: "/" });
+//     res.status(200).json({ success: true, redirect: "/" });
+
+    res.json({ success: true, token, redirect: "/" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error." });
