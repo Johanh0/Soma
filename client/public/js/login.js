@@ -1,33 +1,59 @@
+document.getElementById("login-form").addEventListener("submit", async function (event) {
+  // Prevent the form from automatically submitting
+  event.preventDefault();
 
+  // Get the values of the input fields
+  const loginEmail = document.getElementById("login-email").value;
+  const loginPassword = document.getElementById("login-pw").value;
 
-document.getElementById("login-form").addEventListener("submit", function(event) {
-    // Prevent the form from automatically submitting
-    event.preventDefault();
+  // Get the error fields for displaying messages
+  const emailError = document.getElementById("email-error");
+  const passwordError = document.getElementById("password-error");
 
-    // Get the values of the input fields
-    const loginUsername = document.getElementById("login-username").value;
-    const loginPassword = document.getElementById("login-pw").value;
+  // Clear previous error messages
+  emailError.textContent = '';
+  passwordError.textContent = '';
 
-    // Get the error fields when the user enters in the data wrong in the input field
-    const usernameError = document.getElementById("username-error");
-    const passwordError = document.getElementById("password-error");
+  // Validate the inputs
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Clears the previous error messages
-    usernameError.textContent = '';
-    passwordError.textContent = '';
+  if (loginEmail === '' || !emailRegex.test(loginEmail)) {
+    emailError.textContent = "Please enter a valid email address.";
+    return;
+  }
 
-    const loginUserNameRegex = /^[A-Za-z0-9]+$/;
+  if (loginPassword === '' || loginPassword.length < 8) {
+    passwordError.textContent = "Please make sure your password is at least 8 characters long.";
+    return;
+  }
 
-    // Check if the username or password fields are empty or if it does not have the number of characters needed to login
-    if (loginUsername === '' || loginUsername.length < 5 || !loginUserNameRegex.test(loginUsername)) {
-      usernameError.textContent = "Please make sure you fill out the Username field, have at least 5 characters and no special characters.";
-      return; 
+  try {
+    // Send login data to the server
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: loginEmail, password: loginPassword })
+    });
+
+    const data = await response.json();
+
+    // Handle server response
+    if (!response.ok) {
+      if (data.error === 'Incorrect password.') {
+        passwordError.textContent = data.error;
+      } else if (data.error === 'User not found.') {
+        emailError.textContent = data.error;
+      }
+      return;
     }
-    if (loginPassword === '' || loginPassword.length < 8) {
-      passwordError.textContent = "Please make sure you fill out the Password field and have at least 8 characters to login.";
-      return; 
+
+    // Store the JWT token in localStorage
+    if (data.token) {
+      localStorage.setItem('token', data.token); 
+      window.location.href = data.redirect; 
     }
-
-    document.getElementById("login-form").submit();
-  });
-
+  } catch (error) {
+    console.error('Error during login:', error);
+    passwordError.textContent = 'An error occurred. Please try again.';
+  }
+});

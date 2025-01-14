@@ -1,26 +1,24 @@
 <section class="profile">
-    <div class="user-card">
-        <div class="user-header">
-            <h1>Profile Information</h1>
-            <img src="/assets/img/profile-img.jpeg">
-        </div>
-        <div class="profile-body">
-            <h3 id="profile-username">Username: <span id="user-info">BKUpNext</span></h3>
-            <h3>First Name: <span id="user-info">Blamah</span> </h3>
-            <h3>Last Name: <span id="user-info"> Kotay</span></h3>
-            <h3>Email Address: <span id="user-info" >BKotay4@gmail.com</span></h3>
-            {{!-- <a href="/login"> --}}
-            <button id="logoutBtn">Logout out of SOMA?</button>
-            {{!-- </a> --}}
-        </div>    
+  <div class="user-card">
+    <div class="user-header">
+      <h1>Profile Information</h1>
+      <img src="/assets/img/profile-img.jpeg" alt="Profile Picture">
     </div>
+    <div class="profile-body">
+      <h3 id="profile-username">Username: <span></span></h3>
+      <h3>First Name: <span id="firstName"></span></h3>
+      <h3>Last Name: <span id="lastName"></span></h3>
+      <h3>Email Address: <span id="email"></span></h3>
+      <button id="logoutBtn">Logout of SOMA?</button>
+    </div>
+  </div>
 </section>
 
 <div id="logoutModal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn" id="closeModal">&times;</span>
-        <h2>Are you sure you want to logout?</h2>
-        <button id="confirmLogout" class="confirm-logout"> Logout</button>
-        <button id="cancelLogout" class="cancel-logout">Stay</button>
-    </div>
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>Are you sure you want to logout?</h2>
+    <button id="confirmLogout" class="confirm-logout">Logout</button>
+    <button id="cancelLogout" class="cancel-logout">Stay</button>
+  </div>
 </div>
