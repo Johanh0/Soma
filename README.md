@@ -127,7 +127,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support or Contact
 
-For support or if you wish to contact me, feel free to email us at [johanherrera20000@gmail.com](mailto:johanherrera20000@gmail.com).
+For support or if you wish to contact us, feel free to email us at [johanherrera20000@gmail.com](mailto:johanherrera20000@gmail.com).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
