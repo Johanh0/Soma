@@ -1,0 +1,87 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+@import url("signup.css");
+
+h1 {
+  font-weight: bold;
+  margin: 0;
+  font-size: 4rem;
+  padding-top: 50px;
+  padding-bottom: 10px;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 20px;
+  border: 1px solid #ffbf99;
+  background-color: orange;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+  background: #495057;
+  margin-top: 10px;
+}
+
+button:hover {
+  transform: scale(0.95);
+}
+
+form {
+  background-color: var(--bg-secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 0 50px;
+  height: 100%;
+  text-align: center;
+}
+
+input {
+  background-color: #eee;
+  border: none;
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 40%;
+}
+
+.log-container {
+  background-color: var(--bg-secondary-color);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  min-height: 500px;
+}
+
+.forgot-password {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.login-new_user {
+  margin-top: 20px;
+}
+
+#username-error {
+  color: red;
+}
+
+#password-error {
+  color: red;
+}
+@media screen and (max-width: 750px) and (min-width: 322px) {
+  input {
+    width: 70%;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+}

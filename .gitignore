@@ -104,6 +104,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+package-lock.json
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -184,6 +185,7 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+.vscode
 
 # yarn v2
 .yarn/cache
@@ -245,3 +247,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Environment variables 
+.env

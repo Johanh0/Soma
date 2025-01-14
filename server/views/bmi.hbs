@@ -1,0 +1,60 @@
+<div class="bmi__container">
+  <form id="bmiForm">
+    {{! <div class="bmi__calculator--options">
+      <div>
+        <input type="radio" name="gender" id="male" />
+        <label for="male">Male</label>
+      </div>
+      <div>
+        <input type="radio" name="gender" id="female" />
+        <label for="female">Female</label>
+      </div>
+    </div> }}
+
+    <div class="bmi__calculator--inputs">
+      <div class="bmi__input--group">
+        <label for="height">Height</label>
+        <div class="bmi__input--field">
+          <input
+            type="text"
+            id="height"
+            name="height"
+            placeholder="Enter height"
+          />
+          <span id="heightUnit">cm</span>
+        </div>
+        <div>
+          <button type="button" id="toggleHeightUnit">Switch to Feet/Inches</button>
+        </div>
+      </div>
+      <div class="bmi__input--group">
+        <label for="weight">Weight</label>
+        <div class="bmi__input--field">
+          <input
+            type="text"
+            id="weight"
+            name="weight"
+            placeholder="Enter weight"
+          />
+          <span id="weightUnit">kg</span>
+        </div>
+        <div>
+          <button type="button" id="toggleWeightUnit">Switch to Pounds</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="bmi__calculator--result">
+      <div>
+        <p>Your BMI is...</p>
+        <h5 id="bmiValue">0</h5>
+      </div>
+      <div id="bmiSuggestion">
+        <p>Your BMI suggests you’re a healthy weight. Your ideal weight is
+          between 63.3kgs - 85.2kgs.</p>
+      </div>
+    </div>
+
+    <button type="submit" class="bmi__calculator--button">Calculate BMI</button>
+  </form>
+</div>

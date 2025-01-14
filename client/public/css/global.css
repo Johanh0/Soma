@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+@import url("var.css");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "Lato", serif;
+  /* color: var(--black-color);
+  background-color: var(--white-color); */
+}
+
+body {
+  display: grid;
+  height: fit-content;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  font-size: var(--text-md);
+  background-color: var(--bg-color);
+  color: var(--font-color);
+}
+
+body :where(header, main, .footer) {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+a {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+input,
+select {
+  outline-color: var(--primary-color);
+  border-radius: 10px;
+}
+
+/* Buttons Styles */
+.primary-btn {
+  display: block;
+  max-width: 200px;
+  min-width: 200px;
+  height: fit-content;
+  padding: 15px 0;
+  text-align: center;
+  font-size: var(--fontSize-sm);
+  color: var(--white-color);
+  background-color: var(--primary-btn-color);
+  border-radius: 8px;
+  margin: auto;
+}
+.primary-btn:hover {
+  background-color: var(--hover-color);
+}
+
+.secondary-btn {
+  display: block;
+  width: 120px;
+  height: fit-content;
+  padding: 10px 0;
+  text-align: center;
+  color: var(--white-color);
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+}

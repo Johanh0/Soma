@@ -1,0 +1,432 @@
+@import url("var.css");
+@import url("global.css");
+@import url("navbar.css");
+@import url("footer.css");
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 90px;
+  min-height: fit-content;
+}
+
+.hero__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 50px;
+  & h1 {
+    font-size: var(--fontSize-lg);
+  }
+
+  & p {
+    font-size: var(--fontSize-md);
+  }
+}
+
+.hero__grid {
+  display: grid;
+  align-content: end;
+  grid-template: 1fr 1fr / 1fr 1fr;
+  gap: 15px;
+
+  & div {
+    display: flex;
+    align-items: end;
+    border-radius: 20px;
+    overflow: hidden;
+    max-width: 210px;
+
+    & img {
+      width: 100%;
+    }
+  }
+
+  & div:nth-child(2),
+  div:nth-child(3) {
+    width: 1200px;
+  }
+}
+.hero .primary-btn {
+  margin: 0 0 0 0;
+}
+
+.orange-1-bg {
+  background: var(--card-color-1);
+}
+.orange-2-bg {
+  background: var(--card-color-2);
+}
+
+.white-bg {
+  background-color: var(--transparent);
+}
+
+/* Fitness Section */
+.fitness-home {
+  margin-top: 80px; /* Added top margin for spacing */
+  margin-bottom: 80px; /* Added bottom margin to separate from next section */
+  padding: 40px 20px;
+  background: linear-gradient(
+    90deg,
+    var(--white-color) 70%,
+    var(--soft-primary-color-1)
+  );
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.fitness-home h1 {
+  font-size: var(--fontSize-lg);
+  /* color: var(--black-color); */
+}
+
+.fitness-home p {
+  font-size: var(--fontSize-md);
+  /* color: var(--soft-black-color); */
+  max-width: 700px;
+}
+
+.fitness-home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.fitness-card {
+  background-color: var(--soft-secondary-color);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.fitness-card:hover {
+  transform: scale(1.05);
+}
+
+.fitness-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.fitness-card h2 {
+  font-size: var(--fontSize-md);
+  color: var(--primary-color);
+}
+
+.fitness-card p {
+  font-size: var(--fontSize-sm);
+  color: var(--soft-black-color);
+}
+
+/* Recipe Section */
+.recipe-home {
+  margin-top: 80px; /* Added top margin to create space above */
+  margin-bottom: 80px; /* Added bottom margin to avoid overlap */
+  padding: 40px 20px;
+  background: linear-gradient(
+    90deg,
+    var(--soft-primary-color-2),
+    var(--white-color)
+  );
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.recipe-home h1 {
+  font-size: var(--fontSize-lg);
+  /* color: var(--black-color); */
+}
+
+.recipe-home p {
+  font-size: var(--fontSize-md);
+  color: var(--soft-black-color);
+  max-width: 700px;
+}
+
+.recipe-home__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.recipe-card {
+  background-color: var(--soft-secondary-color);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+.recipe-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.recipe-card h2 {
+  font-size: var(--fontSize-md);
+  color: var(--primary-color);
+}
+
+.recipe-card p {
+  font-size: var(--fontSize-sm);
+  color: var(--soft-black-color);
+}
+
+/* AI Chatbot Section */
+.chatbot-home {
+  margin-top: 80px; /* Added top margin for spacing */
+  margin-bottom: 80px; /* Added bottom margin to create separation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  text-align: center;
+}
+
+.chatbot-home h1 {
+  font-size: var(--fontSize-lg);
+  /* color: var(--black-color); */
+  margin-bottom: 10px;
+}
+
+.chatbot-home p {
+  font-size: var(--fontSize-md);
+  color: var(--soft-black-color);
+  max-width: 800px;
+  margin-bottom: 30px;
+}
+
+/* Chatbot Info Cards */
+.chatbot-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.chatbot-card {
+  background-color: var(--white-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.chatbot-card:hover {
+  transform: translateY(-10px);
+}
+
+.chatbot-card h2 {
+  font-size: var(--fontSize-md);
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.chatbot-card p {
+  font-size: var(--fontSize-sm);
+  color: black;
+  line-height: 1.6;
+}
+
+/* Chatbot Action Section */
+.chatbot-action {
+  text-align: center;
+  width: 100%;
+}
+
+.chatbot-action p {
+  font-size: var(--fontSize-md);
+  color: var(--soft-black-color);
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.chatbot-action .primary-btn {
+  margin: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 779px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 4px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 2px);
+  }
+
+  @media (max-width: 1200px) {
+    .hero__grid,
+    .fitness-home__grid,
+    .recipe-home__grid {
+      grid-template-columns: repeat(2, 1fr); /* Two columns for this range */
+      gap: 20px;
+    }
+  }
+}
+@media (max-width: 1000px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(2, 1fr); /* Ensure two columns here */
+    gap: 15px;
+  }
+}
+@media (max-width: 950px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Maintain two columns for tablet screens */
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: repeat(
+      2,
+      1fr
+    ); /* Still maintain two columns for smaller tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__grid,
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr; /* Stack vertically only on very small screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 8px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 4px);
+  }
+
+  .hero__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .hero .primary-btn {
+    margin: 0 auto; /* Center the button horizontally */
+  }
+
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chatbot-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .fitness-home,
+  .recipe-home,
+  .chatbot-home {
+    padding: 15px 10px;
+  }
+
+  .fitness-home h1,
+  .recipe-home h1,
+  .chatbot-home h1 {
+    font-size: calc(var(--fontSize-lg) - 10px);
+  }
+
+  .fitness-home p,
+  .recipe-home p,
+  .chatbot-home p {
+    font-size: calc(var(--fontSize-md) - 6px);
+  }
+
+  .hero__info h1 {
+    font-size: calc(var(--fontSize-lg) - 12px);
+  }
+
+  .hero__info p {
+    font-size: calc(var(--fontSize-md) - 6px);
+  }
+  .hero .primary-btn {
+    margin: 0 auto; /* Center the button horizontally */
+  }
+  .fitness-card,
+  .recipe-card,
+  .chatbot-card {
+    padding: 15px;
+    font-size: calc(var(--fontSize-sm) - 2px);
+  }
+
+  .chatbot-info {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .chatbot-card p {
+    line-height: 1.4;
+  }
+
+  .fitness-home__grid,
+  .recipe-home__grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
