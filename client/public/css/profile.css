@@ -32,3 +32,84 @@
     margin: 10px;
   }
   
+  #user-info{
+    font-size: 1.3rem;
+    color: var(--primary-color);
+  }
+
+  button {
+    margin-bottom: 20px;
+  }
+
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 50px;
+    width: 300px;
+    height: 300px;
+    margin: 200px auto;
+    text-align: center;
+    font-size: 1.5rem;
+    display: block;
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 40px;
+    height: 40px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+} */
+
+.confirm-logout {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 20px;
+}
+
+.cancel-logout {
+    background-color: #4CAF50;
+    color: white;
+    width: 120px;
+}
+
+@media screen and (max-width: 750px) and (min-width: 322px){
+    .user-card{
+width: 350px;
+    }
+  footer {
+    margin-top: 100px;
+    margin-bottom: 0px;
+}
+}

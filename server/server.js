@@ -4,7 +4,7 @@ const app = express();
 const { create } = require("express-handlebars");
 
 // PORT
-const PORT = process.env.PORT || 3009;
+const PORT = process.env.PORT || 3002;
 
 // API Version
 const API_VERSION = "/api/v1";
