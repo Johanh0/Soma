@@ -1,0 +1,51 @@
+<section class="hero">
+  <h1>Quality Food.</h1>
+  <div class="search__container">
+    <form action="" class="search">
+      <div class="keyword__container">
+        <label for="">Recipe Name or Keyword</label>
+        <input type="text" id="keyword--input" required />
+      </div>
+      <div class="options__container">
+        <div class="exclude__container">
+          <label for="">Exclude Ingredients</label>
+          <input type="text" id="exclude--input" />
+        </div>
+        <div>
+          <label for="">Food Intolerance</label>
+          <input type="text" id="intolerance--input" />
+        </div>
+      </div>
+      <div class="options__container">
+        <div class="select--input">
+          <label for="">Diet Type</label>
+          <select id="diet--options" class="select--target">
+            <option value="">Any</option>
+            <option value="pescetarian">Pescetarian</option>
+            <option value="lacto-vegetarian">Lacto Vegetarian</option>
+            <option value="ovo-vegetarian">Ovo Vegetarian</option>
+            <option value="vegan">Vegan</option>
+            <option value="paleo">Paleo</option>
+            <option value="primal">Primal</option>
+            <option value="vegetarian">Vegetarian</option>
+          </select>
+        </div>
+        <div>
+          <label for="">Include</label>
+          <input type="text" id="include--input" />
+        </div>
+      </div>
+      <div>
+        <input class="submit" type="submit" value="Submit" />
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="loader--container">
+  <span class="loader"></span>
+</section>
+<section class="result">
+</section>
+
+<section class="modal"></section>
