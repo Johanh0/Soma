@@ -14,7 +14,7 @@ We believe in providing quality resources to help individuals achieve lifestyles
 
 ## About The Project
 
-**Soma** is a web platform designed to provide users with essential health tools to help them stay healthy and improve their well-being. The website offers three main features:
+**SOMA** is a web platform designed to provide users with essential health tools to help them stay healthy and improve their well-being. The website offers three main features:
 
 1. **Exercise Finder**: A tool that helps users find exercises tailored to their needs and fitness goals, whether for strength, flexibility, or cardiovascular health.
 2. **Healthy Recipe Finder**: A feature that allows users to discover healthy, nutritious recipes that suit various dietary preferences and promote overall well-being.
@@ -39,7 +39,7 @@ Our mission is to empower individuals with the tools they need to live healthier
 
 ## Getting Started
 
-Follow these steps to get a local copy of **Soma** up and running. This project is split into two main folders: one for the **client** (front-end) and one for the **server** (back-end). You'll need to install dependencies for both parts.
+Follow these steps to get a local copy of **SOMA** up and running. This project is split into two main folders: one for the **client** (front-end) and one for the **server** (back-end). You'll need to install dependencies for both parts.
 
 ### Prerequisites
 
