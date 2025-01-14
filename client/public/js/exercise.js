@@ -1,31 +1,12 @@
 import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
-// Ensure the user is authenticated
-const token = localStorage.getItem("token");
-console.log("Token from localStorage:", token); 
-
-if (!token) {
-  alert("You must log in to access this page.");
-  window.location.href = "/login";
-  return; 
-}
-
-// Fetch the exercise page to ensure the user is authenticated
-fetch("/exercise", {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${token}`, 
-  },
-})
+// Ensure the user is authenticated and fetch the exercise page
+fetch("/exercise")
   .then((response) => {
-    console.log("Authorization Header Sent:", `Bearer ${token}`); 
-    console.log("Response status:", response.status); 
-
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         alert("Your session has expired. Please log in again.");
-        localStorage.removeItem("token");
         window.location.href = "/login";
       }
       throw new Error("Unauthorized access");
@@ -33,8 +14,8 @@ fetch("/exercise", {
     return response.text();
   })
   .then((html) => {
-    console.log("Page content fetched successfully"); 
-    document.body.innerHTML = html; 
+    console.log("Page content fetched successfully");
+    document.body.innerHTML = html;
   })
   .catch((error) => {
     console.error("Error fetching page:", error);
@@ -47,36 +28,24 @@ const loader = document.querySelector(".loader");
 const resultContainer = document.querySelector(".result");
 const modalView = document.querySelector(".modal");
 
-// Fetch all exercises from API or localStorage
+// Fetch all exercises from the API
 async function fetchAllExercises() {
   try {
-    const isStorage = localStorage.getItem("exercises");
-
-    if (isStorage != null) {
-      console.log("Loaded exercises from localStorage"); 
-      return JSON.parse(isStorage);
-    }
-
-    console.log("Fetching exercises from API"); 
-    const response = await fetch(`/api/v1/exercise/workouts`, {
-      headers: {
-        Authorization: `Bearer ${token}`, 
-      },
-    });
+    console.log("Fetching exercises from API");
+    const response = await fetch(`/api/v1/exercise/workouts`);
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         alert("Your session has expired. Please log in again.");
-        localStorage.removeItem("token");
         window.location.href = "/login";
       }
       throw new Error("Failed to fetch exercises");
     }
 
     const data = await response.json();
-    console.log("Fetched exercises from API:", data); 
+    console.log("Fetched exercises from API:", data);
 
-    localStorage.setItem("exercises", JSON.stringify(data)); 
+    return data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
     alert("Failed to fetch exercises. Please try again later.");
@@ -160,7 +129,7 @@ searchForm.addEventListener("submit", async (event) => {
   if (filterExercise.length === 0) {
     loader.style.display = "none";
     resultContainer.innerHTML = `
-      <h4>We Couldn't Found Any Data With This Options.</h4>
+      <h4>We Couldn't Find Any Data With These Options.</h4>
     `;
     return;
   }

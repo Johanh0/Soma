@@ -7,23 +7,25 @@ const bcrypt = require("bcryptjs");
 const db = require("./database/db");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
+app.use(cookieParser());
 app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET;
+
 // PORT
 const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
 
+// Middleware to authenticate token from cookies
 function authenticateToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  console.log("Authorization Header:", req.headers.authorization); 
+  const token = req.cookies.token;
 
   if (!token) {
-    console.log("No token provided");
+    console.log("No token provided in cookies");
     return res.status(401).render("401", {
       layout: "main",
       title: "Unauthorized",
@@ -35,7 +37,7 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
-      console.error("Token verification failed:", err); 
+      console.error("Token verification failed:", err);
       return res.status(403).render("403", {
         layout: "main",
         title: "Forbidden",
@@ -45,8 +47,7 @@ function authenticateToken(req, res, next) {
       });
     }
 
-    console.log("Authenticated User:", user); // Debugging
-    req.user = user;
+    req.user = user; 
     next();
   });
 }
@@ -66,7 +67,7 @@ app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 console.log("Static files served from:", path.join(__dirname, "../client/public"));
 
-// Route's pages
+// Route: Home
 app.get("/", (req, res) => {
   res.render("home", {
     layout: "main",
@@ -76,7 +77,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Define /signup route
+// Route: Signup Page
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
@@ -86,7 +87,7 @@ app.get("/signup", (req, res) => {
   });
 });
 
-// Define /login route
+// Route: Login Page
 app.get("/login", (req, res) => {
   res.render("login", {
     layout: "loginLayout",
@@ -118,7 +119,7 @@ app.get("/bmi", authenticateToken, (req, res) => {
 app.get("/chatai", authenticateToken, (req, res) => {
   res.render("chatai", {
     layout: "main",
-    title: "Soma chatAI",
+    title: "Soma ChatAI",
     style: "css/chatai.css",
     script: "js/chatai.js",
   });
@@ -136,14 +137,14 @@ app.get("/recipes", authenticateToken, (req, res) => {
 // Profile Route
 app.get("/profile", authenticateToken, async (req, res) => {
   try {
-    console.log("Fetching profile for user ID:", req.user.id); // Debugging
+    console.log("Fetching profile for user ID:", req.user.id);
 
     const [userRows] = await db.connection
       .promise()
       .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
 
     if (userRows.length === 0) {
-      console.log("No user found with ID:", req.user.id); 
+      console.log("No user found with ID:", req.user.id);
       return res.status(404).send("User not found.");
     }
 
@@ -151,7 +152,7 @@ app.get("/profile", authenticateToken, async (req, res) => {
     res.render("profile", {
       layout: "main",
       title: "Soma Profile",
-      user, 
+      user,
       style: "css/profile.css",
       script: "js/profile.js",
     });
@@ -163,10 +164,15 @@ app.get("/profile", authenticateToken, async (req, res) => {
 
 // Logout Route
 app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   res.redirect("/login");
 });
 
-// Add POST routes for signup and login
+// Signup Route
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -195,6 +201,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Login Route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -219,19 +226,19 @@ app.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({ success: true, token, redirect: "/" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
+
+    res.status(200).json({ success: true, redirect: "/" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error." });
   }
 });
-
-// Routers
-const apiExercise = require("./routes/api/exercise.js");
-const apiRecipe = require("./routes/api/recipe.js");
-
-app.use(`${API_VERSION}/exercise`, apiExercise);
-app.use(`${API_VERSION}/recipe`, apiRecipe);
 
 // Handle 404 - Not Found
 app.get("/*", (req, res) => {
@@ -243,7 +250,7 @@ app.get("/*", (req, res) => {
   });
 });
 
-// Start server
+// Start Server
 app.listen(PORT, () => {
   console.log(`Server is live on port ${PORT}`);
 });

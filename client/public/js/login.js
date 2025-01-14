@@ -3,8 +3,8 @@ document.getElementById("login-form").addEventListener("submit", async function 
   event.preventDefault();
 
   // Get the values of the input fields
-  const loginEmail = document.getElementById("login-email").value;
-  const loginPassword = document.getElementById("login-pw").value;
+  const loginEmail = document.getElementById("login-email").value.trim();
+  const loginPassword = document.getElementById("login-pw").value.trim();
 
   // Get the error fields for displaying messages
   const emailError = document.getElementById("email-error");
@@ -32,7 +32,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
     const response = await fetch('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: loginEmail, password: loginPassword })
+      body: JSON.stringify({ email: loginEmail, password: loginPassword }),
     });
 
     const data = await response.json();
@@ -47,10 +47,10 @@ document.getElementById("login-form").addEventListener("submit", async function 
       return;
     }
 
-    // Store the JWT token in localStorage
-    if (data.token) {
-      localStorage.setItem('token', data.token); 
-      window.location.href = data.redirect; 
+    // Redirect to the home page after successful login
+    if (data.success) {
+      alert('Login successful!');
+      window.location.href = data.redirect || '/';
     }
   } catch (error) {
     console.error('Error during login:', error);
