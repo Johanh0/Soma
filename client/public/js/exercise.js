@@ -15,7 +15,7 @@ if (!token) {
 fetch("/exercise", {
   method: "GET",
   headers: {
-    Authorization: `Bearer ${token}`, 
+    'Authorization': `Bearer ${token}`, 
   },
 })
   .then((response) => {
