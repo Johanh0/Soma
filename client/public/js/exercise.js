@@ -5,11 +5,11 @@ import footerYear from "/js/footer.js";
 const token = localStorage.getItem("token");
 console.log("Token from localStorage:", token);
 
-if (!token) {
-  alert("You must log in to access this page.");
-  window.location.href = "/login";
-  return;
-}
+// if (!token) {
+//   alert("You must log in to access this page.");
+//   window.location.href = "/login";
+//   return;
+// }
 
 // Fetch the exercise page to ensure the user is authenticated
 fetch("/exercise", {
@@ -204,8 +204,10 @@ if (!allExercises || !allExercises.data) {
   handleModal();
 }
 
-// Initialize UI features
-storageTheme();
-themeToggle();
-navbarToggle();
-footerYear();
+// Trigger functions after the DOM were load
+document.addEventListener("DOMContentLoaded", () => {
+  storageTheme();
+  themeToggle();
+  navbarToggle();
+  footerYear();
+});

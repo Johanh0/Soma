@@ -101,7 +101,7 @@ app.get("/login", (req, res) => {
 });
 
 // Protected Routes
-app.get("/exercise", authenticateToken, (req, res) => {
+app.get("/exercise", (req, res) => {
   res.render("exercise", {
     layout: "main",
     title: "Soma Exercise",
@@ -110,7 +110,7 @@ app.get("/exercise", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/bmi", authenticateToken, (req, res) => {
+app.get("/bmi", (req, res) => {
   res.render("bmi", {
     layout: "main",
     title: "Soma BMI",
@@ -119,7 +119,7 @@ app.get("/bmi", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/chatai", authenticateToken, (req, res) => {
+app.get("/chatai", (req, res) => {
   res.render("chatai", {
     layout: "main",
     title: "Soma chatAI",
@@ -128,7 +128,7 @@ app.get("/chatai", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/recipes", authenticateToken, (req, res) => {
+app.get("/recipes", (req, res) => {
   res.render("recipes", {
     layout: "main",
     title: "Soma Recipes",
@@ -138,7 +138,7 @@ app.get("/recipes", authenticateToken, (req, res) => {
 });
 
 // Profile Route
-app.get("/profile", authenticateToken, async (req, res) => {
+app.get("/profile", async (req, res) => {
   try {
     console.log("Fetching profile for user ID:", req.user.id); // Debugging
 
