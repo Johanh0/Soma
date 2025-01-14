@@ -104,4 +104,14 @@ color: red;
     h1 {
         font-size: 3rem;
     }
+    .log-container{
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    footer{
+      margin-top: 100px;
+    margin-bottom: 0px;
 }
+    }
+

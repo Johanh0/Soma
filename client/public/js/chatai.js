@@ -43,14 +43,14 @@ function appendMessage(message, type) {
 }
 
 function generateAIResponse(userInput) {
-    // Example simple AI responses based on user input
+   
     if (userInput.toLowerCase().includes('hello' || 'hey' || 'hi')) {
         return "Hello! How can SOMA assist you today?";
     } else if (userInput.toLowerCase().includes('how are you')) {
         return "SOMA is doing great! How about you?";
     } else if (userInput.toLowerCase().includes('help')) {
         return "SOMA will be glad to assist? What can I help you with today?";
-    } else if (userInput.toLowerCase().includes('bye' || 'goodbye' || 'see you later')) {
+    } else if (userInput.toLowerCase().includes('bye' || 'goodbye' || 'seeyoulater')) {
         return "Goodbye from SOMA! Have a nice day!";
     }
      else {

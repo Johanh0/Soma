@@ -106,7 +106,11 @@
 .ai-container {
 margin-top: 100px;
 height: 300px;
-min-height: 100vh;
+width: 350px;
+min-height: 65vh;
+}
+.ai-box{
+    height: 200px;
 }
 footer {
     margin-top: 100px;
