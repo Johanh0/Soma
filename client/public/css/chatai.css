@@ -101,7 +101,10 @@
 #send-button:hover {
     background-color: #ff6a13;
 }
-
+.error-message {
+    color: red;
+    font-size: 20px;
+}
 @media screen and (max-width: 750px) and (min-width: 322px){
 .ai-container {
 margin-top: 100px;

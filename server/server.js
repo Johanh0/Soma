@@ -52,6 +52,15 @@ app.get("/login", (req, res) => {
   });
 });
 
+app.get("/contact", (req, res) => {
+  res.render("contact", {
+    layout: "main",
+    title: "Soma contact",
+    style: "css/contact.css",
+    script: "js/contact.js",
+  });
+});
+
 app.get("/profile", (req, res) => {
   res.render("profile", {
     layout: "main",
