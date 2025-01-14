@@ -2,13 +2,55 @@ const path = require("path");
 const express = require("express");
 const app = express();
 const { create } = require("express-handlebars");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcryptjs");
+const db = require("./database/db");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+
+dotenv.config();
+app.use(cookieParser());
+app.use(express.json());
+const SECRET_KEY = process.env.JWT_SECRET;
 
 // PORT
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
 
+// Middleware to authenticate token from cookies
+function authenticateToken(req, res, next) {
+  const token = req.cookies.token;
+
+  if (!token) {
+    console.log("No token provided in cookies");
+    return res.status(401).render("401", {
+      layout: "main",
+      title: "Unauthorized",
+      message: "You must log in to access this page.",
+      style: "css/home.css",
+      script: "js/home.js",
+    });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      console.error("Token verification failed:", err);
+      return res.status(403).render("403", {
+        layout: "main",
+        title: "Forbidden",
+        message: "Your session has expired or your token is invalid. Please log in again.",
+        style: "css/home.css",
+        script: "js/home.js",
+      });
+    }
+
+    req.user = user; 
+    next();
+  });
+}
 // Set handlebars
 const hbs = create({
   layoutsDir: path.join(__dirname, "views/layouts"),
@@ -34,10 +76,11 @@ app.get("/", (req, res) => {
   });
 });
 
+// Route: Signup Page
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
-    title: "MindWay",
+    title: "Soma Signup",
     style: "css/signup.css",
     script: "js/signup.js",
   });
@@ -46,50 +89,23 @@ app.get("/signup", (req, res) => {
 app.get("/login", (req, res) => {
   res.render("login", {
     layout: "main",
-    title: "MindWay login",
+    title: "Soma login",
     style: "css/login.css",
     script: "js/login.js",
   });
 });
 
-app.get("/contact", (req, res) => {
-  res.render("contact", {
-    layout: "main",
-    title: "Soma contact",
-    style: "css/contact.css",
-    script: "js/contact.js",
-  });
-});
-
-app.get("/profile", (req, res) => {
-  res.render("profile", {
-    layout: "main",
-    title: "Soma profile",
-    style: "css/profile.css",
-    script: "js/profile.js",
-  });
-});
-
-app.get("/exercise", (req, res) => {
+// Protected Routes
+app.get("/exercise", authenticateToken, (req, res) => {
   res.render("exercise", {
     layout: "main",
     title: "Soma Exercise",
     style: "css/exercise.css",
     script: "js/exercise.js",
-
   });
 });
 
-app.get("/recipes", (req, res) => {
-  res.render("recipes", {
-    layout: "main",
-    title: "Soma Recipes",
-    style: "css/recipes.css",
-    script: "js/recipes.js",
-  });
-});
-
-app.get("/bmi", (req, res) => {
+app.get("/bmi", authenticateToken, (req, res) => {
   res.render("bmi", {
     layout: "main",
     title: "Soma BMI",
@@ -98,16 +114,129 @@ app.get("/bmi", (req, res) => {
   });
 });
 
-app.get("/chatai", (req, res) => {
-  res.render("chatai", { layout: "main", title: "Soma chatAI", style: "css/chatai.css", script:"js/chatai.js"});
+app.get("/chatai", authenticateToken, (req, res) => {
+  res.render("chatai", {
+    layout: "main",
+    title: "Soma ChatAI",
+    style: "css/chatai.css",
+    script: "js/chatai.js",
+  });
 });
 
-// Routers
-const apiExercise = require("./routes/api/exercise.js");
-const apiRecipe = require("./routes/api/recipe.js");
+app.get("/recipes", authenticateToken, (req, res) => {
+  res.render("recipes", {
+    layout: "main",
+    title: "Soma Recipes",
+    style: "css/recipes.css",
+    script: "js/recipes.js",
+  });
+});
 
-app.use(`${API_VERSION}/exercise`, apiExercise);
-app.use(`${API_VERSION}/recipe`, apiRecipe);
+// Profile Route
+app.get("/profile", authenticateToken, async (req, res) => {
+  try {
+    console.log("Fetching profile for user ID:", req.user.id);
+
+    const [userRows] = await db.connection
+      .promise()
+      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
+
+    if (userRows.length === 0) {
+      console.log("No user found with ID:", req.user.id);
+      return res.status(404).send("User not found.");
+    }
+
+    const user = userRows[0];
+    res.render("profile", {
+      layout: "main",
+      title: "Soma Profile",
+      user,
+      style: "css/profile.css",
+      script: "js/profile.js",
+    });
+  } catch (error) {
+    console.error("Error fetching profile data:", error);
+    res.status(500).send("Internal server error.");
+  }
+});
+
+// Logout Route
+app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+  res.redirect("/login");
+});
+
+// Signup Route
+app.post("/signup", async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  try {
+    const [existingUser] = await db.connection
+      .promise()
+      .query("SELECT * FROM users WHERE email = ?", [email]);
+
+    if (existingUser.length > 0) {
+      return res.status(400).send("Email already in use.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await db.connection
+      .promise()
+      .query(
+        "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
+        [firstName, lastName, email, hashedPassword]
+      );
+
+    res.redirect("/login");
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).send("Internal server error.");
+  }
+});
+
+// Login Route
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const [userRows] = await db.connection.promise().query(
+      "SELECT * FROM users WHERE LOWER(email) = LOWER(?)",
+      [email]
+    );
+
+    if (userRows.length === 0) {
+      return res.status(400).json({ error: "User not found." });
+    }
+
+    const user = userRows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: "Incorrect password." });
+    }
+
+    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
+
+    res.status(200).json({ success: true, redirect: "/" });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
 
 // Handle 404 - Not Found
 app.get("/*", (req, res) => {

@@ -1,34 +1,56 @@
 import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
+// Ensure the user is authenticated and fetch the exercise page
+fetch("/exercise")
+  .then((response) => {
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) {
+        alert("Your session has expired. Please log in again.");
+        window.location.href = "/login";
+      }
+      throw new Error("Unauthorized access");
+    }
+    return response.text();
+  })
+  .then((html) => {
+    console.log("Page content fetched successfully");
+    document.body.innerHTML = html;
+  })
+  .catch((error) => {
+    console.error("Error fetching page:", error);
+  });
+
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
 const loader = document.querySelector(".loader");
 
 const resultContainer = document.querySelector(".result");
-
 const modalView = document.querySelector(".modal");
 
+// Fetch all exercises from the API
 async function fetchAllExercises() {
   try {
-    // Try to bring information from the localStorage. If it is empty the result will be null
-    const isStorage = localStorage.getItem("exercises");
+    console.log("Fetching exercises from API");
+    const response = await fetch(`/api/v1/exercise/workouts`);
 
-    // Check if the exercises data exist in localStorage
-    if (isStorage != null) {
-      // If it exist use the data from localStorage and prevent make a the call to the API
-      return JSON.parse(localStorage.getItem("exercises"));
+    if (!response.ok) {
+      if (response.status === 401 || response.status === 403) {
+        alert("Your session has expired. Please log in again.");
+        window.location.href = "/login";
+      }
+      throw new Error("Failed to fetch exercises");
     }
 
-    // If it doesn't exist call the API and bring all the data
-    const response = await fetch(`/api/v1/exercise/workouts`);
     const data = await response.json();
+    console.log("Fetched exercises from API:", data);
 
-    // Save the data in localStorage
-    localStorage.setItem("exercises", JSON.stringify(data));
     return data;
-  } catch {}
+  } catch (error) {
+    console.error("Error fetching exercises:", error);
+    alert("Failed to fetch exercises. Please try again later.");
+  }
 }
 
 const allExercises = await fetchAllExercises();
@@ -89,8 +111,16 @@ function closeModal() {
   modalView.style.display = "none";
 }
 
+
 modalView.addEventListener("click", closeModal);
 
+modalView.addEventListener("click", (event) => {
+  if (event.target === modalView) {
+    closeModal();
+  }
+});
+
+// Handle search form submission
 searchForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const exercise = exerciseOptions.value;
@@ -105,27 +135,29 @@ searchForm.addEventListener("submit", async (event) => {
   if (filterExercise.length === 0) {
     loader.style.display = "none";
     resultContainer.innerHTML = `
-    <h4>We Couldn't Found Any Data With This Options.</h4>
+      <h4>We Couldn't Find Any Data With These Options.</h4>
     `;
+    return;
   }
 
   loader.style.display = "none";
   filterExercise.forEach((data) => {
     resultContainer.innerHTML += `
-        <article class="result--card" data-id="${data.id}">
+      <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-            <img src="${data.gifUrl}" alt="" loading="lazy" >
+          <img src="${data.gifUrl}" alt="" loading="lazy" />
         </div>
         <div class="card--info">
-            <h3>${data.target} - ${data.name}</h3>
-            <h4>${data.bodyPart}</h4>
+          <h3>${data.target} - ${data.name}</h3>
+          <h4>${data.bodyPart}</h4>
         </div>
-    </article>
+      </article>
     `;
   });
 
   handleModal();
 });
+
 
 // Trigger functions after the DOM is loaded
 document.addEventListener("DOMContentLoaded", async () => {
