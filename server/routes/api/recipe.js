@@ -3,7 +3,15 @@ const router = express.Router();
 const recipe = require("../../utils/recipe");
 
 router.get("/search-recipe", async (req, res) => {
-  if (!req.query.search && !req.query.diet) {
+  const { search, diet, intolerances, include, exclude } = req.query;
+
+  if (
+    search == undefined ||
+    diet == undefined ||
+    intolerances == undefined ||
+    include == undefined ||
+    exclude == undefined
+  ) {
     res.send({
       error: "You must provide a recipe name",
     });
@@ -11,9 +19,16 @@ router.get("/search-recipe", async (req, res) => {
     return;
   }
 
-  //   console.log(req.query.search, req.query.diet);
-  const data = await recipe.getRecipe(req.query.search, req.query.search);
-  res.send({ data });
+  try {
+    const data = await recipe.getRecipe(
+      search,
+      diet,
+      intolerances,
+      include,
+      exclude
+    );
+    res.send({ data });
+  } catch {}
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ const axios = require("axios");
 // API KEY
 const API_KEY = process.env.API_KEY_RECIPE;
 
-async function getRecipe(search, diet) {
+async function getRecipe(search, diet, intolerances, include, exclude) {
   //  pescetarian, vegan, paleo, primal, and vegetarian.
   const options = {
     method: "GET",
@@ -11,16 +11,19 @@ async function getRecipe(search, diet) {
     params: {
       query: search,
       diet: diet,
+      intolerances: intolerances,
+      includeIngredients: include,
+      excludeIngredients: exclude,
       instructionsRequired: "true",
       fillIngredients: "false",
       addRecipeInformation: "true",
       addRecipeInstructions: "true",
-      addRecipeNutrition: "true",
+      addRecipeNutrition: "false",
       maxReadyTime: "45",
       ignorePantry: "true",
       sort: "max-used-ingredients",
-      offset: "10",
-      number: "10",
+      offset: "0",
+      number: "20",
     },
     headers: {
       "x-rapidapi-key": API_KEY,

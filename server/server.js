@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
 const db = require("./database/db");
 const jwt = require("jsonwebtoken");
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 
 dotenv.config();
 app.use(express.json());
@@ -18,14 +18,16 @@ const PORT = process.env.PORT || 3009;
 const API_VERSION = "/api/v1";
 
 function authenticateToken(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1]; 
+  const token = req.headers.authorization?.split(" ")[1];
+
+  console.log("Authorization Header:", req.headers.authorization); 
 
   if (!token) {
-    // If no token is provided, render the 401 page
-    return res.status(401).render('401', {
-      layout: 'main',
-      title: 'Unauthorized',
-      message: 'You must log in to access this page.',
+    console.log("No token provided");
+    return res.status(401).render("401", {
+      layout: "main",
+      title: "Unauthorized",
+      message: "You must log in to access this page.",
       style: "css/home.css",
       script: "js/home.js",
     });
@@ -33,21 +35,21 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
-      // If token is invalid or expired, render the 403 page
-      return res.status(403).render('403', {
-        layout: 'main',
-        title: 'Forbidden',
-        message: 'Your session has expired or your token is invalid. Please log in again.',
+      console.error("Token verification failed:", err); 
+      return res.status(403).render("403", {
+        layout: "main",
+        title: "Forbidden",
+        message: "Your session has expired or your token is invalid. Please log in again.",
         style: "css/home.css",
         script: "js/home.js",
       });
     }
 
-    req.user = user; 
-    next(); 
+    console.log("Authenticated User:", user); // Debugging
+    req.user = user;
+    next();
   });
 }
-
 
 // Set handlebars
 const hbs = create({
@@ -61,8 +63,8 @@ app.set("view engine", "hbs");
 
 // Middleware
 app.use(express.static(path.join(__dirname, "../client/public")));
-app.use(bodyParser.urlencoded({ extended: true })); 
-console.log(path.join(__dirname, "../client/public"));
+app.use(bodyParser.urlencoded({ extended: true }));
+console.log("Static files served from:", path.join(__dirname, "../client/public"));
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -73,6 +75,7 @@ app.get("/", (req, res) => {
     script: "js/home.js",
   });
 });
+
 // Define /signup route
 app.get("/signup", (req, res) => {
   res.render("signup", {
@@ -94,7 +97,7 @@ app.get("/login", (req, res) => {
 });
 
 // Protected Routes
-app.get('/exercise', authenticateToken, (req, res) => {
+app.get("/exercise", authenticateToken, (req, res) => {
   res.render("exercise", {
     layout: "main",
     title: "Soma Exercise",
@@ -103,7 +106,7 @@ app.get('/exercise', authenticateToken, (req, res) => {
   });
 });
 
-app.get('/bmi', authenticateToken, (req, res) => {
+app.get("/bmi", authenticateToken, (req, res) => {
   res.render("bmi", {
     layout: "main",
     title: "Soma BMI",
@@ -112,88 +115,116 @@ app.get('/bmi', authenticateToken, (req, res) => {
   });
 });
 
-
-
-app.get("/chatai", (req, res) => {
-  res.render("chatai", { layout: "main", title: "Soma chatAI" });
+app.get("/chatai", authenticateToken, (req, res) => {
+  res.render("chatai", {
+    layout: "main",
+    title: "Soma chatAI",
+    style: "css/chatai.css",
+    script: "js/chatai.js",
+  });
 });
 
-// Add POST routes for signup and login
-app.post('/signup', async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
-
-  try {
-    // Check if the email already exists in the database
-    const [existingUser] = await db.connection
-      .promise()
-      .query('SELECT * FROM users WHERE email = ?', [email]);
-
-    if (existingUser.length > 0) {
-      return res.status(400).send('Email already in use.');
-    }
-
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Insert the new user into the database
-    await db.connection
-      .promise()
-      .query(
-        'INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)',
-        [firstName, lastName, email, hashedPassword]
-      );
-
-    // Redirect to the login page or send a success message
-    res.redirect('/login'); // Redirect to login after successful signup
-  } catch (error) {
-    console.error('Error during signup:', error);
-    res.status(500).send('Internal server error.');
-  }
+app.get("/recipes", authenticateToken, (req, res) => {
+  res.render("recipes", {
+    layout: "main",
+    title: "Soma Recipes",
+    style: "css/recipes.css",
+    script: "js/recipes.js",
+  });
 });
 
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-
+// Profile Route
+app.get("/profile", authenticateToken, async (req, res) => {
   try {
-    console.log('Login attempt with email:', email);
+    console.log("Fetching profile for user ID:", req.user.id); // Debugging
 
-    // Check if the user exists by email
-    const [userRows] = await db.connection.promise().query(
-      'SELECT * FROM users WHERE LOWER(email) = LOWER(?)',
-      [email]
-    );
-
-    console.log('Query result:', userRows);
+    const [userRows] = await db.connection
+      .promise()
+      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
 
     if (userRows.length === 0) {
-      console.log('User not found for email:', email);
-      return res.status(400).json({ error: 'User not found.' });
+      console.log("No user found with ID:", req.user.id); 
+      return res.status(404).send("User not found.");
     }
 
     const user = userRows[0];
-    console.log('User found:', user);
-
-    // Compare entered password with the hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(400).json({ error: 'Incorrect password.' });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { id: user.id, email: user.email },
-      SECRET_KEY,
-      { expiresIn: '1h' }
-    );
-
-    res.json({ success: true, token, redirect: '/' });
+    res.render("profile", {
+      layout: "main",
+      title: "Soma Profile",
+      user, 
+      style: "css/profile.css",
+      script: "js/profile.js",
+    });
   } catch (error) {
-    console.error('Error during login:', error);
-    res.status(500).json({ error: 'Internal server error.' });
+    console.error("Error fetching profile data:", error);
+    res.status(500).send("Internal server error.");
   }
 });
 
+// Logout Route
+app.get("/logout", (req, res) => {
+  res.redirect("/login");
+});
+
+// Add POST routes for signup and login
+app.post("/signup", async (req, res) => {
+  const { firstName, lastName, email, password } = req.body;
+
+  try {
+    const [existingUser] = await db.connection
+      .promise()
+      .query("SELECT * FROM users WHERE email = ?", [email]);
+
+    if (existingUser.length > 0) {
+      return res.status(400).send("Email already in use.");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    await db.connection
+      .promise()
+      .query(
+        "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
+        [firstName, lastName, email, hashedPassword]
+      );
+
+    res.redirect("/login");
+  } catch (error) {
+    console.error("Error during signup:", error);
+    res.status(500).send("Internal server error.");
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const [userRows] = await db.connection.promise().query(
+      "SELECT * FROM users WHERE LOWER(email) = LOWER(?)",
+      [email]
+    );
+
+    if (userRows.length === 0) {
+      return res.status(400).json({ error: "User not found." });
+    }
+
+    const user = userRows[0];
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+      return res.status(400).json({ error: "Incorrect password." });
+    }
+
+    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+      expiresIn: "1h",
+    });
+
+    res.json({ success: true, token, redirect: "/" });
+  } catch (error) {
+    console.error("Error during login:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
+});
 
 // Routers
 const apiExercise = require("./routes/api/exercise.js");
