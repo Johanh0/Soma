@@ -1,7 +1,7 @@
 
-const mysql = require('mysql2');
-const dotenv = require('dotenv');
-const bcrypt = require('bcryptjs');
+const mysql = require("mysql2");
+const dotenv = require("dotenv");
+const bcrypt = require("bcryptjs");
 
 dotenv.config();
 
@@ -16,8 +16,7 @@ connection
     .promise()
     .query('SELECT * FROM users')
     .then(([rows, fields]) => {
-        console.log(rows);
+//         console.log(rows);
     });
     
 module.exports = { connection };
-

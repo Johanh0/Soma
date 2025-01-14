@@ -25,19 +25,30 @@ const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
 const loader = document.querySelector(".loader");
-
 const resultContainer = document.querySelector(".result");
 const modalView = document.querySelector(".modal");
 
-// Fetch all exercises from the API
+// Fetch all exercises from API or localStorage
 async function fetchAllExercises() {
   try {
+    const isStorage = localStorage.getItem("exercises");
+
+    if (isStorage != null) {
+      console.log("Loaded exercises from localStorage");
+      return JSON.parse(isStorage);
+    }
+
     console.log("Fetching exercises from API");
-    const response = await fetch(`/api/v1/exercise/workouts`);
+    const response = await fetch(`/api/v1/exercise/workouts`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
         alert("Your session has expired. Please log in again.");
+        localStorage.removeItem("token");
         window.location.href = "/login";
       }
       throw new Error("Failed to fetch exercises");
@@ -45,7 +56,7 @@ async function fetchAllExercises() {
 
     const data = await response.json();
     console.log("Fetched exercises from API:", data);
-
+    localStorage.setItem("exercises", JSON.stringify(data));
     return data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
@@ -72,23 +83,21 @@ function openModal(data) {
 
   modalView.innerHTML = `
     <div class="modal--card">
-    <div class="card--img">
-      <img src="${data.gifUrl}" alt="" loading="lazy" />
-    </div>
-    <div class="card--info">
-      <h3>${data.name}</h3>
-      <h5>${data.target}</h5>
-      <div class="secondary--muscles">
-      <p>Other muscles:</p>
+      <div class="card--img">
+        <img src="${data.gifUrl}" alt="" loading="lazy" />
       </div>
-      <div class="instructions">
-      <p>Instructions</p>
-        <ol>
-  
-        </ol>
+      <div class="card--info">
+        <h3>${data.name}</h3>
+        <h5>${data.target}</h5>
+        <div class="secondary--muscles">
+          <p>Other muscles:</p>
+        </div>
+        <div class="instructions">
+          <p>Instructions</p>
+          <ol></ol>
+        </div>
       </div>
     </div>
-  </div>
   `;
 
   const secondaryMusclesElement = document.querySelector(".secondary--muscles");
@@ -102,7 +111,7 @@ function openModal(data) {
 
   data.instructions.forEach((instruction) => {
     instructionsElement.innerHTML += `
-    <li>${instruction}</li>
+      <li>${instruction}</li>
     `;
   });
 }
@@ -110,9 +119,6 @@ function openModal(data) {
 function closeModal() {
   modalView.style.display = "none";
 }
-
-
-modalView.addEventListener("click", closeModal);
 
 modalView.addEventListener("click", (event) => {
   if (event.target === modalView) {
@@ -135,7 +141,7 @@ searchForm.addEventListener("submit", async (event) => {
   if (filterExercise.length === 0) {
     loader.style.display = "none";
     resultContainer.innerHTML = `
-      <h4>We Couldn't Find Any Data With These Options.</h4>
+      <h4>We Couldn't Found Any Data With This Options.</h4>
     `;
     return;
   }
@@ -145,7 +151,7 @@ searchForm.addEventListener("submit", async (event) => {
     resultContainer.innerHTML += `
       <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-          <img src="${data.gifUrl}" alt="" loading="lazy" />
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
           <h3>${data.target} - ${data.name}</h3>
@@ -158,20 +164,21 @@ searchForm.addEventListener("submit", async (event) => {
   handleModal();
 });
 
-
-// Trigger functions after the DOM is loaded
-document.addEventListener("DOMContentLoaded", async () => {
+// Load exercises on page load
+if (!allExercises || !allExercises.data) {
+  alert("No exercises available.");
+} else {
   allExercises.data.slice(0, 20).forEach((data) => {
     resultContainer.innerHTML += `
-        <article class="result--card" data-id="${data.id}">
+      <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-            <img src="${data.gifUrl}" alt="" loading="lazy" >
+            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
         </div>
         <div class="card--info">
-            <h3>${data.name}</h3>
-            <h5>${data.target}</h5>
+          <h3>${data.name}</h3>
+          <h5>${data.target}</h5>
         </div>
-    </article>
+      </article>
     `;
   });
 

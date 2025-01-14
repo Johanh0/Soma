@@ -19,7 +19,6 @@ const PORT = process.env.PORT || 3009;
 
 // API Version
 const API_VERSION = "/api/v1";
-
 // Middleware to authenticate token from cookies
 function authenticateToken(req, res, next) {
   const token = req.cookies.token;
@@ -46,7 +45,6 @@ function authenticateToken(req, res, next) {
         script: "js/home.js",
       });
     }
-
     req.user = user; 
     next();
   });
@@ -59,12 +57,10 @@ const hbs = create({
 });
 
 app.engine("hbs", hbs.engine);
-
 app.set("view engine", "hbs");
 
 // Path static client directory
 app.use(express.static(path.join(__dirname, "../client/public")));
-console.log(path.join(__dirname, "../client/public"));
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -76,7 +72,7 @@ app.get("/", (req, res) => {
   });
 });
 
-// Route: Signup Page
+// Define /signup route
 app.get("/signup", (req, res) => {
   res.render("signup", {
     layout: "main",
@@ -140,7 +136,6 @@ app.get("/profile", authenticateToken, async (req, res) => {
     const [userRows] = await db.connection
       .promise()
       .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
-
     if (userRows.length === 0) {
       console.log("No user found with ID:", req.user.id);
       return res.status(404).send("User not found.");
@@ -223,7 +218,6 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
       expiresIn: "1h",
     });
-
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -237,6 +231,15 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "Internal server error." });
   }
 });
+
+// Routers
+const apiExercise = require("./routes/api/exercise.js");
+const apiRecipe = require("./routes/api/recipe.js");
+const apiChatAI = require("./routes/api/chatai.js");
+
+app.use(`${API_VERSION}/exercise`, apiExercise);
+app.use(`${API_VERSION}/recipe`, apiRecipe);
+app.use(`${API_VERSION}/chatai`, apiChatAI);
 
 // Handle 404 - Not Found
 app.get("/*", (req, res) => {
