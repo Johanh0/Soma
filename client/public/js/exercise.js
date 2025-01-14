@@ -74,18 +74,18 @@ async function fetchAllExercises() {
     }
 
     const data = await response.json();
+    localStorage.setItem("exercises", JSON.stringify(data));
     console.log("Fetched exercises from API:", data);
 
-    localStorage.setItem("exercises", JSON.stringify(data));
+    return data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
     alert("Failed to fetch exercises. Please try again later.");
   }
 }
 
-const allExercises = await fetchAllExercises();
-
-function handleModal() {
+async function handleModal() {
+  const allExercises = await fetchAllExercises();
   const allCards = document.querySelectorAll(".result--card");
 
   allCards.forEach((card) => {
@@ -130,7 +130,7 @@ function openModal(data) {
 
   data.instructions.forEach((instruction) => {
     instructionsElement.innerHTML += `
-      <li>${instruction}</li>
+    <li>${instruction}</li>
     `;
   });
 }
@@ -138,6 +138,8 @@ function openModal(data) {
 function closeModal() {
   modalView.style.display = "none";
 }
+
+modalView.addEventListener("click", closeModal);
 
 modalView.addEventListener("click", (event) => {
   if (event.target === modalView) {
@@ -147,6 +149,7 @@ modalView.addEventListener("click", (event) => {
 
 // Handle search form submission
 searchForm.addEventListener("submit", async (event) => {
+  const allExercises = await fetchAllExercises();
   event.preventDefault();
   const exercise = exerciseOptions.value;
   const target = targetOptions.value;
@@ -183,29 +186,27 @@ searchForm.addEventListener("submit", async (event) => {
   handleModal();
 });
 
-// Load exercises on page load
-if (!allExercises || !allExercises.data) {
-  alert("No exercises available.");
-} else {
+// Trigger functions after the DOM is loaded
+document.addEventListener("DOMContentLoaded", async () => {
+  const allExercises = await fetchAllExercises();
+
   allExercises.data.slice(0, 20).forEach((data) => {
     resultContainer.innerHTML += `
-      <article class="result--card" data-id="${data.id}">
+        <article class="result--card" data-id="${data.id}">
         <div class="card--img">
-            <img src="${data.gifUrl}" alt="${data.name} exercise image" loading="lazy" >
+            <img src="${data.gifUrl}" alt="" loading="lazy" >
         </div>
         <div class="card--info">
-          <h3>${data.name}</h3>
-          <h5>${data.target}</h5>
+            <h3>${data.name}</h3>
+            <h5>${data.target}</h5>
         </div>
-      </article>
+    </article>
     `;
   });
 
   handleModal();
-}
-
-// Initialize UI features
-storageTheme();
-themeToggle();
-navbarToggle();
-footerYear();
+  storageTheme();
+  themeToggle();
+  navbarToggle();
+  footerYear();
+});

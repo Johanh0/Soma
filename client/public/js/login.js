@@ -91,33 +91,4 @@ document.addEventListener("DOMContentLoaded", () => {
   themeToggle();
   navbarToggle();
   footerYear();
-  // try {
-  //   // Send login data to the server
-  //   const response = await fetch('/login', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify({ email: loginEmail, password: loginPassword })
-  //   });
-
-  //   const data = await response.json();
-
-  //   // Handle server response
-  //   if (!response.ok) {
-  //     if (data.error === 'Incorrect password.') {
-  //       passwordError.textContent = data.error;
-  //     } else if (data.error === 'User not found.') {
-  //       emailError.textContent = data.error;
-  //     }
-  //     return;
-  //   }
-
-  //   // Store the JWT token in localStorage
-  //   if (data.token) {
-  //     localStorage.setItem('token', data.token);
-  //     window.location.href = data.redirect;
-  //   }
-  // } catch (error) {
-  //   console.error('Error during login:', error);
-  //   passwordError.textContent = 'An error occurred. Please try again.';
-  // }
 });

@@ -11,6 +11,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET;
+
 // PORT
 const PORT = process.env.PORT || 3009;
 
@@ -28,8 +29,8 @@ function authenticateToken(req, res, next) {
       layout: "main",
       title: "Unauthorized",
       message: "You must log in to access this page.",
-      style: "css/home.css",
-      script: "js/home.js",
+      style: "css/404.css",
+      script: "js/404.js",
     });
   }
 
@@ -41,12 +42,10 @@ function authenticateToken(req, res, next) {
         title: "Forbidden",
         message:
           "Your session has expired or your token is invalid. Please log in again.",
-        style: "css/home.css",
-        script: "js/home.js",
+        style: "css/404.css",
+        script: "js/404.js",
       });
     }
-
-    console.log("Authenticated User:", user); // Debugging
     req.user = user;
     next();
   });
@@ -65,10 +64,11 @@ app.set("view engine", "hbs");
 // Middleware
 app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(bodyParser.urlencoded({ extended: true }));
-console.log(
-  "Static files served from:",
-  path.join(__dirname, "../client/public")
-);
+// console.log(
+//   "Static files served from:",
+//   path.join(__dirname, "../client/public")
+// );
+
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -122,7 +122,7 @@ app.get("/bmi", authenticateToken, (req, res) => {
 app.get("/chatai", authenticateToken, (req, res) => {
   res.render("chatai", {
     layout: "main",
-    title: "Soma chatAI",
+    title: "Soma ChatAI",
     style: "css/chatai.css",
     script: "js/chatai.js",
   });
@@ -167,6 +167,26 @@ app.get("/profile", authenticateToken, async (req, res) => {
   }
 });
 
+app.get("/contact", (req, res) => {
+  res.render("contact", {
+    layout: "main",
+    title: "Soma contact",
+    style: "css/contact.css",
+    script: "js/contact.js",
+  });
+});
+
+// Logout Route
+// app.get("/logout", (req, res) => {
+//   res.clearCookie("token", {
+//     httpOnly: true,
+//     secure: process.env.NODE_ENV === "production",
+//     sameSite: "strict",
+//   });
+//   res.redirect("/login");
+// });
+
+// Signup Route
 // Logout Route
 app.get("/logout", (req, res) => {
   res.redirect("/login");
@@ -223,6 +243,14 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
       expiresIn: "1h",
     });
+//     res.cookie("token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//       sameSite: "strict",
+//       maxAge: 3600000,
+//     });
+
+//     res.status(200).json({ success: true, redirect: "/" });
 
     res.json({ success: true, token, redirect: "/" });
   } catch (error) {
