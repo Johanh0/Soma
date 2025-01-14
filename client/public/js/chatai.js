@@ -43,7 +43,6 @@ function appendMessage(message, type) {
 }
 
 function generateAIResponse(userInput) {
-   
     if (userInput.toLowerCase().includes('hello' || 'hey' || 'hi')) {
         return "Hello! How can SOMA assist you today?";
     } else if (userInput.toLowerCase().includes('how are you')) {
