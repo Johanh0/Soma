@@ -1,26 +1,6 @@
 import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
-// Ensure the user is authenticated
-// fetch("/exercise")
-//   .then((response) => {
-//     if (!response.ok) {
-//       if (response.status === 401 || response.status === 403) {
-//         alert("Your session has expired. Please log in again.");
-//         window.location.href = "/login";
-//       }
-//       throw new Error("Unauthorized access");
-//     }
-//     return response.text();
-//   })
-//   .then((html) => {
-//     console.log("Page content fetched successfully");
-//     document.body.innerHTML = html;
-//   })
-//   .catch((error) => {
-//     console.error("Error fetching page:", error);
-//   });
-
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");
 const targetOptions = document.querySelector("#target--options");
@@ -39,11 +19,7 @@ async function fetchAllExercises() {
     }
 
     console.log("Fetching exercises from API");
-    const response = await fetch(`/api/v1/exercise/workouts`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(`/api/v1/exercise/workouts`);
 
     if (!response.ok) {
       if (response.status === 401 || response.status === 403) {
@@ -130,8 +106,8 @@ modalView.addEventListener("click", (event) => {
 
 // Handle search form submission
 searchForm.addEventListener("submit", async (event) => {
-  const allExercises = await fetchAllExercises();
   event.preventDefault();
+  const allExercises = await fetchAllExercises();
   const exercise = exerciseOptions.value;
   const target = targetOptions.value;
   resultContainer.innerHTML = "";
@@ -171,6 +147,12 @@ searchForm.addEventListener("submit", async (event) => {
 document.addEventListener("DOMContentLoaded", async () => {
   const allExercises = await fetchAllExercises();
 
+  handleModal();
+  storageTheme();
+  themeToggle();
+  navbarToggle();
+  footerYear();
+
   allExercises.data.slice(0, 20).forEach((data) => {
     resultContainer.innerHTML += `
         <article class="result--card" data-id="${data.id}">
@@ -184,10 +166,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     </article>
     `;
   });
-
-  handleModal();
-  storageTheme();
-  themeToggle();
-  navbarToggle();
-  footerYear();
 });
