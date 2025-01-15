@@ -2,43 +2,24 @@ import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
 import footerYear from "/js/footer.js";
 
 // Ensure the user is authenticated
-const token = localStorage.getItem("token");
-console.log("Token from localStorage:", token);
-
-if (!token) {
-  alert("You must log in to access this page.");
-  window.location.href = "/login";
-  return;
-}
-
-// Fetch the exercise page to ensure the user is authenticated
-fetch("/exercise", {
-  method: "GET",
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-})
-  .then((response) => {
-    console.log("Authorization Header Sent:", `Bearer ${token}`);
-    console.log("Response status:", response.status);
-
-    if (!response.ok) {
-      if (response.status === 401 || response.status === 403) {
-        alert("Your session has expired. Please log in again.");
-        localStorage.removeItem("token");
-        window.location.href = "/login";
-      }
-      throw new Error("Unauthorized access");
-    }
-    return response.text();
-  })
-  .then((html) => {
-    console.log("Page content fetched successfully");
-    document.body.innerHTML = html;
-  })
-  .catch((error) => {
-    console.error("Error fetching page:", error);
-  });
+// fetch("/exercise")
+//   .then((response) => {
+//     if (!response.ok) {
+//       if (response.status === 401 || response.status === 403) {
+//         alert("Your session has expired. Please log in again.");
+//         window.location.href = "/login";
+//       }
+//       throw new Error("Unauthorized access");
+//     }
+//     return response.text();
+//   })
+//   .then((html) => {
+//     console.log("Page content fetched successfully");
+//     document.body.innerHTML = html;
+//   })
+//   .catch((error) => {
+//     console.error("Error fetching page:", error);
+//   });
 
 const searchForm = document.querySelector(".search");
 const exerciseOptions = document.querySelector("#exercise--options");

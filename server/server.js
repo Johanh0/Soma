@@ -7,8 +7,10 @@ const bcrypt = require("bcryptjs");
 const db = require("./database/db");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
+app.use(cookieParser());
 app.use(express.json());
 const SECRET_KEY = process.env.JWT_SECRET;
 
@@ -18,13 +20,12 @@ const PORT = process.env.PORT || 3009;
 // API Version
 const API_VERSION = "/api/v1";
 
+// Middleware to authenticate token from cookies
 function authenticateToken(req, res, next) {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  console.log("Authorization Header:", req.headers.authorization);
+  const token = req.cookies.token;
 
   if (!token) {
-    console.log("No token provided");
+    console.log("No token provided in cookies");
     return res.status(401).render("401", {
       layout: "main",
       title: "Unauthorized",
@@ -46,6 +47,7 @@ function authenticateToken(req, res, next) {
         script: "js/404.js",
       });
     }
+
     req.user = user;
     next();
   });
@@ -68,7 +70,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   "Static files served from:",
 //   path.join(__dirname, "../client/public")
 // );
-
 
 // Route's pages
 app.get("/", (req, res) => {
@@ -177,22 +178,16 @@ app.get("/contact", (req, res) => {
 });
 
 // Logout Route
-// app.get("/logout", (req, res) => {
-//   res.clearCookie("token", {
-//     httpOnly: true,
-//     secure: process.env.NODE_ENV === "production",
-//     sameSite: "strict",
-//   });
-//   res.redirect("/login");
-// });
-
-// Signup Route
-// Logout Route
 app.get("/logout", (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
   res.redirect("/login");
 });
 
-// Add POST routes for signup and login
+// Signup Route
 app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
@@ -221,6 +216,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Login Route
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -243,16 +239,15 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
       expiresIn: "1h",
     });
-//     res.cookie("token", token, {
-//       httpOnly: true,
-//       secure: process.env.NODE_ENV === "production",
-//       sameSite: "strict",
-//       maxAge: 3600000,
-//     });
 
-//     res.status(200).json({ success: true, redirect: "/" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
 
-    res.json({ success: true, token, redirect: "/" });
+    res.status(200).json({ success: true, redirect: "/" });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error." });

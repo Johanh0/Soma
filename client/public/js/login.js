@@ -8,12 +8,17 @@ document
     event.preventDefault();
 
     // Get the values of the input fields
-    const loginEmail = document.getElementById("login-email").value;
+    const loginEmail = document.getElementById("login-username").value;
     const loginPassword = document.getElementById("login-pw").value;
+
+    console.log(loginPassword);
 
     // Get the error fields for displaying messages
     const emailError = document.getElementById("email-error");
     const passwordError = document.getElementById("password-error");
+
+    console.log(emailError);
+    console.log(passwordError);
 
     // Clear previous error messages
     emailError.textContent = "";
@@ -22,9 +27,6 @@ document
     // Validate the inputs
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    // Clears the previous error messages
-    usernameError.textContent = "";
-    passwordError.textContent = "";
     if (loginEmail === "" || !emailRegex.test(loginEmail)) {
       emailError.textContent = "Please enter a valid email address.";
       return;
@@ -36,16 +38,6 @@ document
       return;
     }
 
-    // Check if the username or password fields are empty or if it does not have the number of characters needed to login
-    if (
-      loginUsername === "" ||
-      loginUsername.length < 5 ||
-      !loginUserNameRegex.test(loginUsername)
-    ) {
-      usernameError.textContent =
-        "Please make sure you fill out the Username field, have at least 5 characters and no special characters.";
-      return;
-    }
     if (loginPassword === "" || loginPassword.length < 8) {
       passwordError.textContent =
         "Please make sure you fill out the Password field and have at least 8 characters to login.";
