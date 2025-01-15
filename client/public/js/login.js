@@ -8,17 +8,12 @@ document
     event.preventDefault();
 
     // Get the values of the input fields
-    const loginEmail = document.getElementById("login-username").value;
-    const loginPassword = document.getElementById("login-pw").value;
-
-    console.log(loginPassword);
+    const loginEmail = document.getElementById("login-email").value.trim();
+    const loginPassword = document.getElementById("login-pw").value.trim();
 
     // Get the error fields for displaying messages
     const emailError = document.getElementById("email-error");
     const passwordError = document.getElementById("password-error");
-
-    console.log(emailError);
-    console.log(passwordError);
 
     // Clear previous error messages
     emailError.textContent = "";
@@ -27,24 +22,16 @@ document
     // Validate the inputs
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (loginEmail === "" || !emailRegex.test(loginEmail)) {
+    if (!emailRegex.test(loginEmail)) {
       emailError.textContent = "Please enter a valid email address.";
       return;
     }
 
-    if (loginPassword === "" || loginPassword.length < 8) {
+    if (loginPassword.length < 8) {
       passwordError.textContent =
         "Please make sure your password is at least 8 characters long.";
       return;
     }
-
-    if (loginPassword === "" || loginPassword.length < 8) {
-      passwordError.textContent =
-        "Please make sure you fill out the Password field and have at least 8 characters to login.";
-      return;
-    }
-
-    // document.getElementById("login-form").submit();
 
     try {
       // Send login data to the server
@@ -66,18 +53,16 @@ document
         return;
       }
 
-      // Store the JWT token in localStorage
-      if (data.token) {
-        localStorage.setItem("token", data.token);
-        window.location.href = data.redirect;
-      }
+      // Redirect the user after successful login
+      alert("Login successful!");
+      window.location.href = data.redirect || "/";
     } catch (error) {
       console.error("Error during login:", error);
       passwordError.textContent = "An error occurred. Please try again.";
     }
   });
 
-// Trigger functions after the DOM were load
+// Initialize UI features
 document.addEventListener("DOMContentLoaded", () => {
   storageTheme();
   themeToggle();
