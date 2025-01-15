@@ -1,59 +1,86 @@
-document.getElementById("login-form").addEventListener("submit", async function (event) {
-  // Prevent the form from automatically submitting
-  event.preventDefault();
+import { navbarToggle, themeToggle, storageTheme } from "/js/navbar.js";
+import footerYear from "/js/footer.js";
 
-  // Get the values of the input fields
-  const loginEmail = document.getElementById("login-email").value.trim();
-  const loginPassword = document.getElementById("login-pw").value.trim();
+document
+  .getElementById("login-form")
+  .addEventListener("submit", async function (event) {
+    // Prevent the form from automatically submitting
+    event.preventDefault();
 
-  // Get the error fields for displaying messages
-  const emailError = document.getElementById("email-error");
-  const passwordError = document.getElementById("password-error");
+    // Get the values of the input fields
+    const loginEmail = document.getElementById("login-username").value;
+    const loginPassword = document.getElementById("login-pw").value;
 
-  // Clear previous error messages
-  emailError.textContent = '';
-  passwordError.textContent = '';
+    console.log(loginPassword);
 
-  // Validate the inputs
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Get the error fields for displaying messages
+    const emailError = document.getElementById("email-error");
+    const passwordError = document.getElementById("password-error");
 
-  if (loginEmail === '' || !emailRegex.test(loginEmail)) {
-    emailError.textContent = "Please enter a valid email address.";
-    return;
-  }
+    console.log(emailError);
+    console.log(passwordError);
 
-  if (loginPassword === '' || loginPassword.length < 8) {
-    passwordError.textContent = "Please make sure your password is at least 8 characters long.";
-    return;
-  }
+    // Clear previous error messages
+    emailError.textContent = "";
+    passwordError.textContent = "";
 
-  try {
-    // Send login data to the server
-    const response = await fetch('/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: loginEmail, password: loginPassword }),
-    });
+    // Validate the inputs
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    const data = await response.json();
-
-    // Handle server response
-    if (!response.ok) {
-      if (data.error === 'Incorrect password.') {
-        passwordError.textContent = data.error;
-      } else if (data.error === 'User not found.') {
-        emailError.textContent = data.error;
-      }
+    if (loginEmail === "" || !emailRegex.test(loginEmail)) {
+      emailError.textContent = "Please enter a valid email address.";
       return;
     }
 
-    // Redirect to the home page after successful login
-    if (data.success) {
-      alert('Login successful!');
-      window.location.href = data.redirect || '/';
+    if (loginPassword === "" || loginPassword.length < 8) {
+      passwordError.textContent =
+        "Please make sure your password is at least 8 characters long.";
+      return;
     }
-  } catch (error) {
-    console.error('Error during login:', error);
-    passwordError.textContent = 'An error occurred. Please try again.';
-  }
+
+    if (loginPassword === "" || loginPassword.length < 8) {
+      passwordError.textContent =
+        "Please make sure you fill out the Password field and have at least 8 characters to login.";
+      return;
+    }
+
+    // document.getElementById("login-form").submit();
+
+    try {
+      // Send login data to the server
+      const response = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: loginEmail, password: loginPassword }),
+      });
+
+      const data = await response.json();
+
+      // Handle server response
+      if (!response.ok) {
+        if (data.error === "Incorrect password.") {
+          passwordError.textContent = data.error;
+        } else if (data.error === "User not found.") {
+          emailError.textContent = data.error;
+        }
+        return;
+      }
+
+      // Store the JWT token in localStorage
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        window.location.href = data.redirect;
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      passwordError.textContent = "An error occurred. Please try again.";
+    }
+  });
+
+// Trigger functions after the DOM were load
+document.addEventListener("DOMContentLoaded", () => {
+  storageTheme();
+  themeToggle();
+  navbarToggle();
+  footerYear();
 });
