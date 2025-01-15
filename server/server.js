@@ -97,15 +97,21 @@ app.get("/login", (req, res) => {
 // Profile Page (Protected)
 app.get("/profile", authenticateToken, async (req, res) => {
   try {
+    console.log("Fetching profile for user ID:", req.user.id);
+
     const [userRows] = await db.connection
       .promise()
       .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
 
     if (userRows.length === 0) {
+      console.log("No user found with ID:", req.user.id);
       return res.status(404).render("404", { layout: "main", title: "User Not Found" });
     }
 
     const user = userRows[0];
+    console.log("Fetched user data:", user); // Log fetched user data
+
+    // Render the profile page with the user data
     res.render("profile", {
       layout: "main",
       title: "Profile",
@@ -118,6 +124,7 @@ app.get("/profile", authenticateToken, async (req, res) => {
     res.status(500).render("500", { layout: "main", title: "Server Error" });
   }
 });
+
 
 
 
