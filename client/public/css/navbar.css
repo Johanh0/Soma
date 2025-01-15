@@ -48,12 +48,14 @@
     text-align: end;
     background-color: var(--bg-secondary-color);
     border-radius: 8px;
+    font-size: var(--fontSize-sm);
+    width: fit-content;
 
     & ul {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 10px;
     }
   }
 }
