@@ -14,6 +14,10 @@
   margin: 0 auto;
 }
 
+.icon--user {
+  width: 100px;
+}
+
 .user-card {
   width: 750px;
   background-color: var(--bg-secondary-color);
@@ -49,9 +53,9 @@ button {
 }
 
 .modal-content {
-  background-color: white;
+  background-color: var(--bg-secondary-color);
   padding: 20px;
-  border-radius: 50px;
+  border-radius: 10px;
   width: 300px;
   height: 300px;
   margin: 200px auto;
@@ -89,7 +93,7 @@ button {
 .cancel-logout {
   background-color: #4caf50;
   color: white;
-  width: 120px;
+  text-align: center;
 }
 
 @media screen and (max-width: 750px) and (min-width: 322px) {
