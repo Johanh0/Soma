@@ -116,7 +116,7 @@ Don't forget to give the project a star! Thanks again!
     <img src="https://avatars.githubusercontent.com/u/164114802" alt="User 1" style="border-radius: 50%; width: 100px; height: 100px;" />
 </a>
 <a href="https://github.com/ddungttran">
-    <img src="https://avatars.githubusercontent.com/u/164114802" alt="User 1" style="border-radius: 50%; width: 100px; height: 100px;" />
+    <img src="https://avatars.githubusercontent.com/u/184243160" alt="User 1" style="border-radius: 50%; width: 100px; height: 100px;" />
 </a>
 
 <!-- LICENSE -->

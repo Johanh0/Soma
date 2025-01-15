@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
     confirmLogout.addEventListener("click", () => {
       fetch("/logout", { method: "GET" })
         .then(() => {
-          alert("Logged out successfully.");
           window.location.href = "/login";
         })
         .catch((error) => {
