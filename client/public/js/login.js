@@ -54,7 +54,6 @@ document
       }
 
       // Redirect the user after successful login
-      alert("Login successful!");
       window.location.href = data.redirect || "/";
     } catch (error) {
       console.error("Error during login:", error);

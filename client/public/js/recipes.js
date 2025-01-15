@@ -115,7 +115,7 @@ function openModal(data) {
   modalView.innerHTML = `
       <div class="modal--card">
       <div class="card--img">
-        <img src="${data.image}" alt="${recipe.title} recipe image" loading="lazy" />
+        <img src="${data.image}" alt="${data.title} recipe image" loading="lazy" />
       </div>
       <div class="card--info">
         <h3>${data.title}</h3>
