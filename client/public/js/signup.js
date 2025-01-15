@@ -10,13 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
     event.preventDefault();
     const firstName = document.getElementById("firstName").value.trim();
     const lastName = document.getElementById("lastName").value.trim();
-    const username = document.getElementById("username").value.trim();
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const passwordAgain = document.getElementById("passwordAgain").value.trim();
 
     const nameRegex = /^[A-Za-z]+$/;
-    const userNameRegex = /^[A-Za-z0-9]+$/;
     let errorMessages = [];
 
     // Validation checks
@@ -29,12 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     if (lastName === "" || lastName.length < 2 || !nameRegex.test(lastName)) {
       errorMessages.push("Please enter your last name.");
-    }
-
-    if (username.length < 5 || !userNameRegex.test(username)) {
-      errorMessages.push(
-        "Username must be at least 5 characters long and no special characters."
-      );
     }
 
     if (!validateEmail(email)) {
