@@ -51,7 +51,8 @@ function authenticateToken(req, res, next) {
       return res.status(403).render("403", {
         layout: "main",
         title: "Forbidden",
-        message: "Your session has expired or your token is invalid. Please log in again.",
+        message:
+          "Your session has expired or your token is invalid. Please log in again.",
         style: "css/404.css",
         script: "js/404.js",
       });
@@ -95,17 +96,21 @@ app.get("/login", (req, res) => {
 });
 
 // Profile Page (Protected)
-app.get("/profile", authenticateToken, async (req, res) => {
+app.get("/profile", async (req, res) => {
   try {
     console.log("Fetching profile for user ID:", req.user.id);
 
     const [userRows] = await db.connection
       .promise()
-      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [req.user.id]);
+      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [
+        req.user.id,
+      ]);
 
     if (userRows.length === 0) {
       console.log("No user found with ID:", req.user.id);
-      return res.status(404).render("404", { layout: "main", title: "User Not Found" });
+      return res
+        .status(404)
+        .render("404", { layout: "main", title: "User Not Found" });
     }
 
     const user = userRows[0];
@@ -124,10 +129,6 @@ app.get("/profile", authenticateToken, async (req, res) => {
     res.status(500).render("500", { layout: "main", title: "Server Error" });
   }
 });
-
-
-
-
 
 // Contact Page
 app.get("/contact", (req, res) => {
@@ -154,7 +155,9 @@ app.post("/signup", async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   try {
-    const [existingUser] = await db.connection.promise().query("SELECT * FROM users WHERE email = ?", [email]);
+    const [existingUser] = await db.connection
+      .promise()
+      .query("SELECT * FROM users WHERE email = ?", [email]);
 
     if (existingUser.length > 0) {
       return res.status(400).send("Email already in use.");
@@ -181,7 +184,9 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const [userRows] = await db.connection.promise().query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
+    const [userRows] = await db.connection
+      .promise()
+      .query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
 
     if (userRows.length === 0) {
       return res.status(400).json({ error: "User not found." });
@@ -213,7 +218,7 @@ app.post("/login", async (req, res) => {
 });
 
 // Protected Routes
-app.get("/exercise", authenticateToken, (req, res) => {
+app.get("/exercise", (req, res) => {
   res.render("exercise", {
     layout: "main",
     title: "Exercise",
@@ -222,7 +227,7 @@ app.get("/exercise", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/bmi", authenticateToken, (req, res) => {
+app.get("/bmi", (req, res) => {
   res.render("bmi", {
     layout: "main",
     title: "BMI",
@@ -231,7 +236,7 @@ app.get("/bmi", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/chatai", authenticateToken, (req, res) => {
+app.get("/chatai", (req, res) => {
   res.render("chatai", {
     layout: "main",
     title: "ChatAI",
@@ -240,7 +245,7 @@ app.get("/chatai", authenticateToken, (req, res) => {
   });
 });
 
-app.get("/recipes", authenticateToken, (req, res) => {
+app.get("/recipes", (req, res) => {
   res.render("recipes", {
     layout: "main",
     title: "Recipes",
