@@ -217,6 +217,7 @@ app.get("/logout", (req, res) => {
 //   }
 // });
 
+
 // Protected Routes
 app.get("/exercise", (req, res) => {
   res.render("exercise", {
