@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
-const db = require("./database/db");
+// const db = require("./database/db");
 
 dotenv.config();
 
@@ -96,39 +96,39 @@ app.get("/login", (req, res) => {
 });
 
 // Profile Page (Protected)
-app.get("/profile", async (req, res) => {
-  try {
-    console.log("Fetching profile for user ID:", req.user.id);
+// app.get("/profile", async (req, res) => {
+//   try {
+//     console.log("Fetching profile for user ID:", req.user.id);
 
-    const [userRows] = await db.connection
-      .promise()
-      .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [
-        req.user.id,
-      ]);
+//     const [userRows] = await db.connection
+//       .promise()
+//       .query("SELECT first_name, last_name, email FROM users WHERE id = ?", [
+//         req.user.id,
+//       ]);
 
-    if (userRows.length === 0) {
-      console.log("No user found with ID:", req.user.id);
-      return res
-        .status(404)
-        .render("404", { layout: "main", title: "User Not Found" });
-    }
+//     if (userRows.length === 0) {
+//       console.log("No user found with ID:", req.user.id);
+//       return res
+//         .status(404)
+//         .render("404", { layout: "main", title: "User Not Found" });
+//     }
 
-    const user = userRows[0];
-    console.log("Fetched user data:", user); // Log fetched user data
+//     const user = userRows[0];
+//     console.log("Fetched user data:", user); // Log fetched user data
 
-    // Render the profile page with the user data
-    res.render("profile", {
-      layout: "main",
-      title: "Profile",
-      user, // Pass user data to the template
-      style: "css/profile.css",
-      script: "js/profile.js",
-    });
-  } catch (error) {
-    console.error("Error fetching profile data:", error);
-    res.status(500).render("500", { layout: "main", title: "Server Error" });
-  }
-});
+//     // Render the profile page with the user data
+//     res.render("profile", {
+//       layout: "main",
+//       title: "Profile",
+//       user, // Pass user data to the template
+//       style: "css/profile.css",
+//       script: "js/profile.js",
+//     });
+//   } catch (error) {
+//     console.error("Error fetching profile data:", error);
+//     res.status(500).render("500", { layout: "main", title: "Server Error" });
+//   }
+// });
 
 // Contact Page
 app.get("/contact", (req, res) => {
@@ -151,71 +151,72 @@ app.get("/logout", (req, res) => {
 });
 
 // Signup Handler
-app.post("/signup", async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+// app.post("/signup", async (req, res) => {
+//   const { firstName, lastName, email, password } = req.body;
 
-  try {
-    const [existingUser] = await db.connection
-      .promise()
-      .query("SELECT * FROM users WHERE email = ?", [email]);
+//   try {
+//     const [existingUser] = await db.connection
+//       .promise()
+//       .query("SELECT * FROM users WHERE email = ?", [email]);
 
-    if (existingUser.length > 0) {
-      return res.status(400).send("Email already in use.");
-    }
+//     if (existingUser.length > 0) {
+//       return res.status(400).send("Email already in use.");
+//     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+//     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db.connection
-      .promise()
-      .query(
-        "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
-        [firstName, lastName, email, hashedPassword]
-      );
+//     await db.connection
+//       .promise()
+//       .query(
+//         "INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)",
+//         [firstName, lastName, email, hashedPassword]
+//       );
 
-    res.redirect("/login");
-  } catch (error) {
-    console.error("Error during signup:", error);
-    res.status(500).send("Internal server error.");
-  }
-});
+//     res.redirect("/login");
+//   } catch (error) {
+//     console.error("Error during signup:", error);
+//     res.status(500).send("Internal server error.");
+//   }
+// });
 
 // Login Handler
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+// app.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const [userRows] = await db.connection
-      .promise()
-      .query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
+//   try {
+//     const [userRows] = await db.connection
+//       .promise()
+//       .query("SELECT * FROM users WHERE LOWER(email) = LOWER(?)", [email]);
 
-    if (userRows.length === 0) {
-      return res.status(400).json({ error: "User not found." });
-    }
+//     if (userRows.length === 0) {
+//       return res.status(400).json({ error: "User not found." });
+//     }
 
-    const user = userRows[0];
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+//     const user = userRows[0];
+//     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid) {
-      return res.status(400).json({ error: "Incorrect password." });
-    }
+//     if (!isPasswordValid) {
+//       return res.status(400).json({ error: "Incorrect password." });
+//     }
 
-    const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
-      expiresIn: "1h",
-    });
+//     const token = jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, {
+//       expiresIn: "1h",
+//     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 3600000, // 1 hour
-    });
+//     res.cookie("token", token, {
+//       httpOnly: true,
+//       secure: process.env.NODE_ENV === "production",
+//       sameSite: "strict",
+//       maxAge: 3600000, // 1 hour
+//     });
 
-    res.status(200).json({ success: true, redirect: "/" });
-  } catch (error) {
-    console.error("Error during login:", error);
-    res.status(500).json({ error: "Internal server error." });
-  }
-});
+//     res.status(200).json({ success: true, redirect: "/" });
+//   } catch (error) {
+//     console.error("Error during login:", error);
+//     res.status(500).json({ error: "Internal server error." });
+//   }
+// });
+
 
 // Protected Routes
 app.get("/exercise", (req, res) => {
